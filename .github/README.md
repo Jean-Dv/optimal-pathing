@@ -1,4 +1,4 @@
-# Project of Programation III at University ![MIT License](https://img.shields.io/badge/License-MIT-green.svg)
+# Project of Programation III at University ![MIT License](https://img.shields.io/badge/License-MIT-green.svg) [![JAVA CI with Maven](https://github.com/Jean-Dv/project-programation/actions/workflows/ci.yml/badge.svg)](https://github.com/Jean-Dv/project-programation/actions/workflows/ci.yml)
 This project is under development.
 
 ## Contributing 

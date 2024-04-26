@@ -1,0 +1,9 @@
+{
+    "java.checkstyle.configuration": "${workspaceFolder}/checkstyle.xml",
+    "java.checkstyle.version": "10.15.0",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+    "java.format.settings.profile": "GoogleStyle",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+}

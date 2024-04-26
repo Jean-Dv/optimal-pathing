@@ -1,4 +1,4 @@
-### Contributing
+# Contributing
 
 ## Required Extensions for Java in Visual Studio Code
 
@@ -14,6 +14,6 @@ To efficiently work with Java in Visual Studio Code, it is recommended to instal
 
 ## Set the Checkstyle Configuration
 
-Check this tutorial to set the Checkstyle configuration in Visual Studio Code: [Checkstyle Configuration in Visual Studio Code](https://code.visualstudio.com/docs/java/java-linting#_checkstyle)
+Check this tutorial to set the Checkstyle configuration in Visual Studio Code: https://code.visualstudio.com/docs/java/java-linting#_checkstyle
 
 

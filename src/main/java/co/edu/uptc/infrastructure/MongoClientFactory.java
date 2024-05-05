@@ -30,6 +30,7 @@ class MongoClientFactory {
     MongoClient mongoClient = MongoClients
         .create(MongoClientSettings.builder().applyConnectionString(new ConnectionString(url))
             .applyToSocketSettings(builder -> builder.connectTimeout(5, TimeUnit.SECONDS)).build());
+    mongoClient.startSession();
     return mongoClient;
   }
 

@@ -8,6 +8,7 @@ import org.junit.Test;
  * Test Main Test.
  */
 public class MainTest {
+
   @Test
   public void test() {
     assertTrue(true);

@@ -30,3 +30,25 @@ jobs:
           java-version: '17'
       - name: 🚨 Checkstyle
         run: mvn validate -f pom.xml
+    
+  test:
+    name: 🧪 Test
+    strategy:
+      matrix:
+        mongodb-version: ['5.0']
+    runs-on: ubuntu-20.04
+    steps:
+      - name: 🧪 Test
+        uses: actions/checkout@v4.1.4
+      - name: 🧪 Test
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.10.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+          mongodb-port: 27017
+      - name: 🧪 Test
+        run: mvn test -f pom.xml

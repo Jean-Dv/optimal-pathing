@@ -1,0 +1,32 @@
+version: '3.9'
+
+networks:
+  project-network:
+    driver: bridge
+
+services:
+  mongo:
+    image: mongo:5.0.0
+    container_name: mongo
+    networks:
+      - project-network
+    ports:
+      - "27017:27017"
+
+  app:
+    build: .
+    command: >
+      bash -c "
+      rm /usr/local/tomcat/webapps/project.war 
+      && rm -rf /usr/local/tomcat/webapps/project 
+      && cp /app/target/project.war /usr/local/tomcat/webapps/ 
+      && catalina.sh run"
+    working_dir: /app
+    ports:
+      - "80:8080"
+    depends_on:
+      - mongo
+    networks:
+      - project-network
+    volumes:
+      - .:/app

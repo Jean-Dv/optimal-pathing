@@ -2,6 +2,7 @@ package co.edu.uptc.controller.orders;
 
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
+import java.util.List;
 
 /**
  * Class that represents the controller for the order.
@@ -20,5 +21,14 @@ public class OrderController {
    */
   public void add(Order order) {
     this.repository.save(order);
+  }
+
+  /**
+   * Method that allows to find all the orders.
+   *
+   * @return List of orders.
+   */
+  public List<Order> getAll() {
+    return this.repository.findAll();
   }
 }

@@ -18,4 +18,9 @@ public class InMemoryOrderRepository implements OrderRepository {
   public void save(Order order) {
     this.orders.add(order);
   }
+
+  @Override
+  public ArrayList<Order> findAll() {
+    return this.orders;
+  }
 }

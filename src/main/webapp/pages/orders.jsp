@@ -15,7 +15,7 @@
   </jsp:include>
   <%@ include file="../components/sidemenu.jsp" %>
 
-  <main class="ml-60 max-h-screen overflow-auto p-8 mt-20 sm:ml-16">
+ <main class="ml-60 max-h-screen overflow-auto p-8 mt-20 sm:ml-16">
     <div class="flex justify-end mb-2">
       <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1 justify-between">
         <button
@@ -61,33 +61,42 @@
       <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
         <thead class="text-left">
           <tr>
-            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Name</th>
-            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Date of Birth</th>
-            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Role</th>
-            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Salary</th>
+            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Order</th>
+            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Remitter Name</th>
+             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Status</th>
+            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Destination Address</th>
+            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Addressee Name</th>
+            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Cashon Delivery</th>
+            
           </tr>
         </thead>
 
         <tbody class="divide-y divide-gray-200">
           <tr>
-            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">John Doe</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Web Developer</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">$120,000</td>
+            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">1</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Catherina	Madine</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">good</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">5383 Ramsey Avenue</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Dugald	Brennand</td>
+             <td class="whitespace-nowrap px-4 py-2 text-gray-700">true</td>
           </tr>
 
           <tr>
-            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Jane Doe</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">04/11/1980</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Web Designer</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">$100,000</td>
+            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">2</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Helen-elizabeth	Boagey</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">good</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">3743 Vermont Plaza</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Laurie	Housby</td>
+             <td class="whitespace-nowrap px-4 py-2 text-gray-700">false</td>
           </tr>
 
           <tr>
-            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Gary Barlow</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">24/05/1995</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Singer</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">$20,000</td>
+             <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">3</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Humphrey	Cosgrave</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">good</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">1 Nevada Circle</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Egbert	Bedder</td>
+             <td class="whitespace-nowrap px-4 py-2 text-gray-700">true</td>
           </tr>
         </tbody>
       </table>

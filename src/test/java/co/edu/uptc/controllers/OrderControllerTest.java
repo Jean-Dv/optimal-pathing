@@ -38,4 +38,15 @@ public class OrderControllerTest {
       fail("Error adding new order.");
     }
   }
+
+  @Test
+  public void testGetAllOrders() {
+    try {
+      List<Order> orders = controller.getAll();
+      assertEquals(1, orders.size());
+      assertEquals("Calle 3 # 24 - 43", orders.get(0).getSourceAddress());
+    } catch (Exception e) {
+      fail("Error getting all orders.");
+    }
+  }
 }

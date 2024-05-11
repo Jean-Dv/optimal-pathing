@@ -19,4 +19,12 @@ public interface OrderRepository {
    * @return List of orders.
    */
   List<Order> findAll();
+
+  /**
+   * Method that allows you to edit an order.
+   *
+   * @param editOrder - Order to edit.
+   * @return Edited order.
+   */
+  Order edit(Order editOrder);
 }

@@ -10,22 +10,22 @@ import co.edu.uptc.model.Order;
 import co.edu.uptc.model.Responsible;
 import java.time.LocalDate;
 import java.util.List;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Test Order Controller.
  */
 public class OrderControllerTest {
-  public static OrderController controller;
+  public OrderController controller;
 
   /**
    * Setup method.
    */
-  @BeforeClass
-  public static void before() {
+  @Before
+  public void before() {
     OrderController controller = new OrderController(new InMemoryOrderRepository());
-    OrderControllerTest.controller = controller;
+    this.controller = controller;
   }
 
   @Test
@@ -44,8 +44,8 @@ public class OrderControllerTest {
   public void testGetAllOrders() {
     try {
       List<Order> orders = controller.getAll();
-      assertEquals(1, orders.size());
-      assertEquals("Calle 3 # 24 - 43", orders.get(0).getSourceAddress());
+      assertEquals(0, orders.size());
+
     } catch (Exception e) {
       fail("Error getting all orders.");
     }

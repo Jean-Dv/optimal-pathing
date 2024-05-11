@@ -31,4 +31,14 @@ public class OrderController {
   public List<Order> getAll() {
     return this.repository.findAll();
   }
+
+  /**
+   * Method that allows you to edit an order.
+   *
+   * @param editOrder - Order to edit.
+   * @return Edited order.
+   */
+  public Order edit(Order editOrder) {
+    return this.repository.edit(editOrder);
+  }
 }

@@ -23,4 +23,16 @@ public class InMemoryOrderRepository implements OrderRepository {
   public ArrayList<Order> findAll() {
     return this.orders;
   }
+
+  @Override
+  public Order edit(Order editOrder) {
+    for (Order order : orders) {
+      if (order.getNumberOrder() == editOrder.getNumberOrder()) {
+        order = editOrder;
+        return order;
+      }
+
+    }
+    return null;
+  }
 }

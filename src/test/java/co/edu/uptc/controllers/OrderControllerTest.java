@@ -77,4 +77,21 @@ public class OrderControllerTest {
       fail("Error getting all orders.");
     }
   }
+
+  @Test
+  public void testDeleteOrder() {
+    try {
+      Order order = new Order(1, LocalDate.now(), LocalDate.ofYearDay(2024, 2), "Calle 3 # 24 - 43",
+          "Calle 4 # 25 - 9", "Saliendo", "Jonh Doe", "Company X", 3000, false, "", "",
+          new Responsible("Chic Elletson", "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359",
+              "bmartt0@netscape.com"));
+
+      controller.add(order);
+
+      assertEquals(order, controller.delete(order.getNumberOrder()));
+      assertNull(controller.delete(order.getNumberOrder()));
+    } catch (Exception e) {
+      fail("Error deleting order.");
+    }
+  }
 }

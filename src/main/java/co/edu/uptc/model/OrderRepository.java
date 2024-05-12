@@ -27,4 +27,12 @@ public interface OrderRepository {
    * @return Edited order.
    */
   Order edit(Order editOrder);
+
+  /**
+   * Method that allows you to delete an order.
+   *
+   * @param orderId - Order to delete.
+   * @return Deleted order.
+   */
+  Order erase(int orderId);
 }

@@ -41,4 +41,13 @@ public class OrderController {
   public Order edit(Order editOrder) {
     return this.repository.edit(editOrder);
   }
+
+  /**
+   * Method that allows you to delete an order.
+   *
+   * @param orderId - Order id to delete.
+   */
+  public Order delete(int orderId) {
+    return this.repository.erase(orderId);
+  }
 }

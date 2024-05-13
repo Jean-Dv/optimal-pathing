@@ -10,6 +10,7 @@ import co.edu.uptc.model.Order;
 import co.edu.uptc.model.Responsible;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +32,7 @@ public class OrderControllerTest {
   @Test
   public void testAddNewOrder() {
     try {
-      controller.add(new Order(1, LocalDate.now(), LocalDate.ofYearDay(2024, 2),
+      controller.add(new Order(UUID.randomUUID(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
           "Calle 3 # 24 - 43", "Calle 4 # 25 - 9", "Saliendo", "Jonh Doe", "Company X", 3000, false,
           "", "", new Responsible("Chic Elletson", "24dcd50d-a38c-42c7-888c-1c783d988fea",
               "(210) 5769359", "bmartt0@netscape.com")));
@@ -54,7 +55,7 @@ public class OrderControllerTest {
   @Test
   public void testEditOrder() {
     try {
-      Order order = new Order(1, LocalDate.now(), LocalDate.ofYearDay(2024, 2), "Calle 3 # 24 - 43",
+      Order order = new Order(LocalDate.now(), LocalDate.ofYearDay(2024, 2), "Calle 3 # 24 - 43",
           "Calle 4 # 25 - 9", "Saliendo", "Jonh Doe", "Company X", 3000, false, "", "",
           new Responsible("Chic Elletson", "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359",
               "bmartt0@netscape.com"));
@@ -62,7 +63,7 @@ public class OrderControllerTest {
       controller.add(order);
 
       // edited order with destination address
-      Order orderEdit = new Order(1, LocalDate.now(), LocalDate.ofYearDay(2024, 2),
+      Order orderEdit = new Order(order.getId(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
           "Calle 3 # 24 - 43", "Calle 6 # 25 - 9", "Saliendo", "Jonh Doe", "Company X", 3000, false,
           "", "", new Responsible("Chic Elletson", "24dcd50d-a38c-42c7-888c-1c783d988fea",
               "(210) 5769359", "bmartt0@netscape.com"));
@@ -70,7 +71,7 @@ public class OrderControllerTest {
       assertEquals(orderEdit, controller.edit(orderEdit));
       assertEquals(orderEdit.getDestinationAddress(),
           controller.edit(orderEdit).getDestinationAddress());
-      orderEdit.setNumberOrder(2);
+      orderEdit.setId(UUID.randomUUID());
       assertNull(controller.edit(orderEdit));
 
     } catch (Exception e) {
@@ -81,15 +82,15 @@ public class OrderControllerTest {
   @Test
   public void testDeleteOrder() {
     try {
-      Order order = new Order(1, LocalDate.now(), LocalDate.ofYearDay(2024, 2), "Calle 3 # 24 - 43",
-          "Calle 4 # 25 - 9", "Saliendo", "Jonh Doe", "Company X", 3000, false, "", "",
-          new Responsible("Chic Elletson", "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359",
-              "bmartt0@netscape.com"));
+      Order order = new Order(UUID.randomUUID(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
+          "Calle 3 # 24 - 43", "Calle 4 # 25 - 9", "Saliendo", "Jonh Doe", "Company X", 3000, false,
+          "", "", new Responsible("Chic Elletson", "24dcd50d-a38c-42c7-888c-1c783d988fea",
+              "(210) 5769359", "bmartt0@netscape.com"));
 
       controller.add(order);
 
-      assertEquals(order, controller.delete(order.getNumberOrder()));
-      assertNull(controller.delete(order.getNumberOrder()));
+      assertEquals(order, controller.delete(order.getId().toString()));
+      assertNull(controller.delete(order.getId().toString()));
     } catch (Exception e) {
       fail("Error deleting order.");
     }

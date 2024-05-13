@@ -27,7 +27,7 @@ public class InMemoryOrderRepository implements OrderRepository {
   @Override
   public Order edit(Order editOrder) {
     for (Order order : orders) {
-      if (order.getNumberOrder() == editOrder.getNumberOrder()) {
+      if (order.getId().toString().equals(editOrder.getId().toString())) {
         order = editOrder;
         return order;
       }
@@ -37,9 +37,9 @@ public class InMemoryOrderRepository implements OrderRepository {
   }
 
   @Override
-  public Order erase(int orderId) {
+  public Order erase(String orderId) {
     for (Order order : orders) {
-      if (order.getNumberOrder() == orderId) {
+      if (order.getId().toString().equals(orderId)) {
         orders.remove(order);
         return order;
       }

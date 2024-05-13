@@ -47,7 +47,7 @@ public class OrderController {
    *
    * @param orderId - Order id to delete.
    */
-  public Order delete(int orderId) {
+  public Order delete(String orderId) {
     return this.repository.erase(orderId);
   }
 }

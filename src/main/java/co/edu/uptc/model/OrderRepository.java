@@ -34,5 +34,5 @@ public interface OrderRepository {
    * @param orderId - Order to delete.
    * @return Deleted order.
    */
-  Order erase(int orderId);
+  Order erase(String orderId);
 }

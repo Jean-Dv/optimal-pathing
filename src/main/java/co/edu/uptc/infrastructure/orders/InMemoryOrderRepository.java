@@ -35,4 +35,15 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
     return null;
   }
+
+  @Override
+  public Order erase(int orderId) {
+    for (Order order : orders) {
+      if (order.getNumberOrder() == orderId) {
+        orders.remove(order);
+        return order;
+      }
+    }
+    return null;
+  }
 }

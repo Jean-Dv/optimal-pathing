@@ -15,7 +15,7 @@
   </jsp:include>
   <%@ include file="../components/sidemenu.jsp" %>
 
- <main class="ml-60 max-h-screen overflow-auto p-8 mt-20 sm:ml-16">
+  <main class="ml-60 max-h-screen overflow-auto p-8 mt-20 sm:ml-16">
     <div class="flex justify-end mb-2">
       <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1 justify-between">
         <button
@@ -63,7 +63,7 @@
           <tr>
             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Order</th>
             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Remitter Name</th>
-             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Status</th>
+            <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Status</th>
             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Destination Address</th>
             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Addressee Name</th>
             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Cashon Delivery</th>
@@ -74,10 +74,10 @@
         <tbody class="divide-y divide-gray-200">
           <tr>
             <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">1</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Catherina	Madine</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Catherina Madine</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">good</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">5383 Ramsey Avenue</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Dugald	Brennand</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Dugald Brennand</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">true</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">
               <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
@@ -103,17 +103,39 @@
                 </button>
               </span>
             </td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+              <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
+                <button
+                  class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
+                  title="Delete order"
+                  onclick="window.location.href='deleteorder.jsp'"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    width="18" height="18"
+                  >
+                    <path fill-rule="evenodd" 
+                      d="M17 5V4C17 2.89543 16.1046 2 15 2H9C7.89543 2 7 2.89543 7 4V5H4C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H5V18C5 19.6569 6.34315 21 8 21H16C17.6569 21 19 19.6569 19 18V7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H17ZM15 4H9V5H15V4ZM17 7H7V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V7Z"
+                      fill="currentColor" />
+                    <path d="M9 9H11V17H9V9Z" fill="currentColor"   />
+                    <path d="M13 9H15V17H13V9Z" fill="currentColor" />
+                  </svg>
+                </button>
+              </span>
+            </td>
           </tr>
 
           <tr>
             <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">2</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Helen-elizabeth	Boagey</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Helen-elizabeth Boagey</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">good</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">3743 Vermont Plaza</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Laurie	Housby</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Laurie Housby</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">false</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-            <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
+              <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
               <button
                 class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
                 title="Edit order"
@@ -135,15 +157,37 @@
                 </svg>
               </button>
             </span>
-          </td>
+            </td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+              <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
+                <button
+                  class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
+                  title="Delete order"
+                  onclick="window.location.href='deleteorder.jsp'"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    width="18" height="18"
+                  >
+                    <path fill-rule="evenodd" 
+                      d="M17 5V4C17 2.89543 16.1046 2 15 2H9C7.89543 2 7 2.89543 7 4V5H4C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H5V18C5 19.6569 6.34315 21 8 21H16C17.6569 21 19 19.6569 19 18V7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H17ZM15 4H9V5H15V4ZM17 7H7V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V7Z"
+                      fill="currentColor" />
+                    <path d="M9 9H11V17H9V9Z" fill="currentColor"   />
+                    <path d="M13 9H15V17H13V9Z" fill="currentColor" />
+                  </svg>
+                </button>
+              </span>
+            </td>
           </tr>
 
           <tr>
             <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">3</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Humphrey	Cosgrave</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Humphrey Cosgrave</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">good</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">1 Nevada Circle</td>
-            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Egbert	Bedder</td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">Egbert Bedder</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">true</td>
             <td class="whitespace-nowrap px-4 py-2 text-gray-700">
               <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
@@ -165,6 +209,28 @@
                       stroke-linejoin="round"
                       d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                     />
+                  </svg>
+                </button>
+              </span>
+            </td>
+            <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+              <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
+                <button
+                  class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
+                  title="Delete order"
+                  onclick="window.location.href='deleteorder.jsp'"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    width="18" height="18"
+                  >
+                    <path fill-rule="evenodd" 
+                      d="M17 5V4C17 2.89543 16.1046 2 15 2H9C7.89543 2 7 2.89543 7 4V5H4C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H5V18C5 19.6569 6.34315 21 8 21H16C17.6569 21 19 19.6569 19 18V7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H17ZM15 4H9V5H15V4ZM17 7H7V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V7Z"
+                      fill="currentColor" />
+                    <path d="M9 9H11V17H9V9Z" fill="currentColor"   />
+                    <path d="M13 9H15V17H13V9Z" fill="currentColor" />
                   </svg>
                 </button>
               </span>

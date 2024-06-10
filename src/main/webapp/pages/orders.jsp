@@ -15,7 +15,7 @@
   </jsp:include>
   <%@ include file="../components/sidemenu.jsp" %>
 
-  <main class="ml-60 max-h-screen overflow-auto p-8 mt-20 sm:ml-16" action="hideWarning()">
+  <main class="ml-60 max-h-screen overflow-auto p-8 mt-20 sm:ml-16">
     <div class="flex justify-end mb-2">
       <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1 justify-between">
         <button
@@ -277,5 +277,5 @@
         </form>
       </div>
   </div>
-  
+
 </body>

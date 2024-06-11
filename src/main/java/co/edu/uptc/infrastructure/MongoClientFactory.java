@@ -10,9 +10,17 @@ import java.util.concurrent.TimeUnit;
 /**
  * Factory class to create and manage MongoClient instances.
  */
-class MongoClientFactory {
+public class MongoClientFactory {
   public static HashMap<String, MongoClient> clients = new HashMap<>();
 
+  /**
+   * Creates a new {@link MongoClient} instance if it does not exist, otherwise it returns the
+   * existing one.
+   *
+   * @param contextName The name of the context.
+   * @param url The URL to connect to the MongoDB server.
+   * @return The {@link MongoClient} instance.
+   */
   public static MongoClient createClient(String contextName, String url) {
     MongoClient mongoClient = MongoClientFactory.getClient(contextName);
     if (mongoClient == null) {

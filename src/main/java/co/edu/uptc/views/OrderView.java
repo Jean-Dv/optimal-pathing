@@ -5,6 +5,7 @@ import co.edu.uptc.infrastructure.MongoClientFactory;
 import co.edu.uptc.infrastructure.orders.MongoOrderRepository;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
+import co.edu.uptc.model.Responsible;
 import co.edu.uptc.utils.ServletUtils;
 import com.mongodb.client.MongoClient;
 import java.io.IOException;
@@ -34,26 +35,37 @@ public class OrderView extends HttpServlet {
     String responsible = req.getParameter("responsible");
     boolean cashonDelivery = false;
 
-    MongoClient mongoClient =
-        MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
-    OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
-    OrderController orderController = new OrderController(orderRepository);
+    if (descriptionAddress == null || destinationAddress == null || remitterName == null
+        || addresseeName == null || price == null || responsible == null) {
 
-    if (cashonDeliveryServlet == null || descriptionAddress == null || destinationAddress == null
-        || remitterName == null || addresseeName == null || price == null || responsible == null) {
-      cashonDelivery = false;
       req.setAttribute("errorMessage", "Error: All fields are required");
       ServletUtils.forward(req, resp, "/pages/addorder.jsp");
       return;
     }
 
-    if (cashonDeliveryServlet.equals("on")) {
+    if (cashonDeliveryServlet != null && cashonDeliveryServlet.equals("on")) {
       cashonDelivery = true;
+    } else {
+      cashonDelivery = false;
     }
 
-    Order order =
-        new Order(null, LocalDate.now(), null, null, destinationAddress, null, addresseeName,
-            remitterName, Integer.parseInt(price), cashonDelivery, descriptionAddress, null, null);
+    if (!remitterName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")
+        || !addresseeName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")) {
+      req.setAttribute("errorMessageString", "only letters");
+      ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+      return;
+    }
+
+    MongoClient mongoClient =
+        MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
+    OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
+    OrderController orderController = new OrderController(orderRepository);
+
+    // TODO: You must complete the spaces since you are only jarcodiating.
+
+    Order order = new Order(LocalDate.now(), LocalDate.now(), "", destinationAddress, "",
+        addresseeName, remitterName, Integer.parseInt(price), cashonDelivery, descriptionAddress,
+        "", new Responsible(responsible, "", "", ""));
     orderController.add(order);
 
   }

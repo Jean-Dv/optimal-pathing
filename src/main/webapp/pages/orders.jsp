@@ -87,8 +87,7 @@
                   <button
                     class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
                     title="Edit order"
-                    onclick="window.location.href='editorder.jsp?id=${order.id}'"
-                  >
+                      onclick="window.location.href='/project-programation/order?id=<%= order.getId() %>&action=edit'">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

@@ -1,5 +1,5 @@
 {
-    "java.checkstyle.configuration": "${workspaceFolder}/checkstyle.xml",
+    "java.checkstyle.configuration": "${workspaceFolder}\\checkstyle.xml",
     "java.checkstyle.version": "10.15.0",
     "java.configuration.updateBuildConfiguration": "interactive",
     "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",

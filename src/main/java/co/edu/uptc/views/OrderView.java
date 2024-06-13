@@ -26,9 +26,16 @@ import org.apache.logging.log4j.Logger;
 public class OrderView extends HttpServlet {
   private static final Logger logger = LogManager.getLogger(OrderView.class);
 
+
+  @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
+    String method = req.getParameter("_method");
+    if (method != null && method.equals("put")) {
+      this.doPut(req, resp);
+      return;
+    }
     String cashonDeliveryServlet = req.getParameter("isCashOn"); // on para si, y null para no
     String destinationAddress = req.getParameter("destinationAddress");
     String descriptionAddress = req.getParameter("descriptionAddress");
@@ -37,6 +44,7 @@ public class OrderView extends HttpServlet {
     String price = req.getParameter("price");
     String responsible = req.getParameter("responsible");
     boolean cashonDelivery = false;
+
 
     if (descriptionAddress == null || destinationAddress == null || remitterName == null
         || addresseeName == null || price == null || responsible == null) {
@@ -77,11 +85,76 @@ public class OrderView extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
+    String id = req.getParameter("id");
+    String action = req.getParameter("action");
+
+    if (action != null && action.equals("edit") && id != null) {
+      MongoClient mongoClient =
+          MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
+      OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
+      OrderController orderController = new OrderController(orderRepository);
+
+      Order order = orderController.getById(id);
+      req.getSession().setAttribute("order", order);
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+    }
+
     ServletUtils.forward(req, resp, "/pages/addorder.jsp");
 
   }
 
+  @Override
+  protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
 
+    final String isCashon = req.getParameter("cashonDelivery");
+    String id = req.getParameter("id");
+    String destinationAddress = req.getParameter("destinationAddress");
+    String descriptionAddress = req.getParameter("descriptionAddress");
+    String remitterName = req.getParameter("remitterName");
+    String addresseeName = req.getParameter("addresseeName");
+    String price = req.getParameter("price");
+    String state = req.getParameter("state");
+
+    if (descriptionAddress == null || destinationAddress == null || remitterName == null
+        || addresseeName == null || price == null || descriptionAddress.isEmpty()
+        || destinationAddress.isEmpty() || remitterName.isEmpty() || addresseeName.isEmpty()
+        || price.isEmpty() || state == null || state.isEmpty()) {
+
+      req.setAttribute("id", id);
+      req.setAttribute("action", "edit");
+      req.setAttribute("all_fields_required", "Error: All fields are required");
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
+    }
+
+    if (!remitterName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")
+        || !addresseeName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")) {
+      req.setAttribute("only_letters_are_accepted", "only letters");
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
+    }
+    MongoClient mongoClient =
+        MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
+    OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
+    OrderController orderController = new OrderController(orderRepository);
+
+    Order order = orderController.getById(id);
+
+    order.setDestinationAddress(destinationAddress);
+    order.setDescription(descriptionAddress);
+    order.setRemitterName(remitterName);
+    order.setAddresseeName(addresseeName);
+    order.setCashonDelivery(isCashon != null ? true : false);
+    order.setShippingValue(Integer.parseInt(price));
+    order.setStatus(state);
+
+    orderController.edit(order);
+    resp.sendRedirect("/project-programation/orders");
+    return;
+  }
+  
+  @Override
   protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     try {

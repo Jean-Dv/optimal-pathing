@@ -11,7 +11,6 @@ import co.edu.uptc.utils.StringUtils;
 import com.mongodb.client.MongoClient;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 public class OrderView extends HttpServlet {
   private static final Logger logger = LogManager.getLogger(OrderView.class);
   
-  @Override
+
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
@@ -83,7 +82,7 @@ public class OrderView extends HttpServlet {
 
   }
   
-  @Override
+
   protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     try {

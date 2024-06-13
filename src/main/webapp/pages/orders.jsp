@@ -72,7 +72,7 @@
         </thead>
         <tbody class="divide-y divide-gray-200">
           <c:forEach var="order" items="${orders}">
-       <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">${order.id}</td>
+            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">${order.id}</td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.remitterName}</td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.status}</td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.destinationAddress}</td>

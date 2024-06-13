@@ -100,7 +100,7 @@ public abstract class MongoRepository<T extends AggregateRoot> {
    * @param id The identifier of the aggregate root.
    * @return The aggregate root found.
    */
-  protected Document findById(String id) {
+  protected Document searchById(String id) {
     MongoCollection<Document> collection = this.collection();
     Document queryDocument = new Document("_id", id);
     Document document = collection.find(queryDocument).first();

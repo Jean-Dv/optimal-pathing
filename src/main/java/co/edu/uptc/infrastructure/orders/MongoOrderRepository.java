@@ -43,6 +43,12 @@ public class MongoOrderRepository extends MongoRepository<Order> implements Orde
     return orderDocument != null ? Order.fromDocument(orderDocument) : null;
   }
 
+  @Override
+  public Order findById(String id) {
+    Document orderDocument = this.searchById(id);
+    return orderDocument != null ? Order.fromDocument(orderDocument) : null;
+  }
+
   protected String collectionName() {
     return "orders";
   }

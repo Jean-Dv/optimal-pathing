@@ -11,7 +11,6 @@ public class StringUtils {
    * @return True if the string is a valid UUID, false otherwise.
    */
   public static boolean isUuid(String string) {
-    return string
-        .matches("/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i");
+    return string.matches("^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}");
   }
 }

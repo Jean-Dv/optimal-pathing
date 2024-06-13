@@ -153,16 +153,15 @@ public class OrderView extends HttpServlet {
     resp.sendRedirect("/project-programation/orders");
     return;
   }
-
-
-
+  
+  @Override
   protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     try {
       MongoClient mongoClient =
           MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
       OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
-      OrderController orderController = new OrderController(orderRepository);
+      final OrderController orderController = new OrderController(orderRepository);
       String idFromParameter = req.getParameter("id");
       if (idFromParameter == null || !StringUtils.isUuid(idFromParameter)) {
         resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

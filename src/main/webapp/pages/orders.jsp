@@ -1,4 +1,6 @@
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="co.edu.uptc.model.Order" %>
 <html lang="en">
 <head>
     <title>Home</title>
@@ -71,13 +73,15 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <c:forEach var="order" items="${orders}">
-            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">${order.id}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.remitterName}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.status}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.destinationAddress}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.addresseeName}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.cashOnDelivery}</td>
+          <% List<Order> orders = (List<Order>) request.getSession().getAttribute("orders"); %>
+          <% for (Order order : orders) { %>
+            <tr id="<%= order.getId() %>">
+              <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= order.getId() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getRemitterName() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getStatus() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getDestinationAddress() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getAddresseeName() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.isCashonDelivery() %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700">
                 <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
                   <button
@@ -103,7 +107,7 @@
                   <button
                     class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
                     title="Delete order"
-                    onclick="showAlert()"
+                    onclick="<%="showAlert('" + order.getId() + "')"%>"
                     >
                     <svg xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -121,7 +125,7 @@
                 </span>
               </td>
             </tr>
-          </c:forEach>
+          <% } %>
         </tbody>
       </table>
     </div>
@@ -129,61 +133,105 @@
 
   <div id="warning-message" class="alert-wrapper fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-50">
     <div class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
-        <form class="space-y-4">
-          <div
-            class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12 sm:p-6 lg:p-8 flex flex-col justify-center items-center"
-            role="alert">
-            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12 6C12.5523 6 13 6.44772 13 7V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V7C11 6.44772 11.4477 6 12 6Z"
-                fill="currentColor" />
-              <path
-                d="M12 16C11.4477 16 11 16.4477 11 17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16Z"
-                fill="currentColor" />
-              <path fill-rule="evenodd" clip-rule="evenodd"
-                d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12Z"
-                fill="currentColor" />
-            </svg>
+        <div
+          class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12 sm:p-6 lg:p-8 flex flex-col justify-center items-center"
+          role="alert">
+          <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 6C12.5523 6 13 6.44772 13 7V13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13V7C11 6.44772 11.4477 6 12 6Z"
+              fill="currentColor" />
+            <path
+              d="M12 16C11.4477 16 11 16.4477 11 17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16Z"
+              fill="currentColor" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12Z"
+              fill="currentColor" />
+          </svg>
 
-            <h1 class="text-center"> Are you sure?</h1>
-            <p class="mt-4 text-gray-500 text-center">
-              You won't be able to revert this!
-            </p>
+          <h1 class="text-center"> Are you sure?</h1>
+          <p class="mt-4 text-gray-500 text-center">
+            You won't be able to revert this!
+          </p>
 
-            <div class="mt-6 sm:flex sm:gap-4 justify-center">
-              <div class="mt-6">
-                <button
-                type="submit"
-                class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
-                onclick="hideWarning()"
-              >
-               Yes, delete it!
+          <div class="mt-6 sm:flex sm:gap-4 justify-center">
+            <div class="mt-6">
+              <button
+              class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
+              onclick="deleteOrder()"
+            >
+              Yes, delete it!
 
-              </button>
-              </div>
-              <div class="mt-6">
-                <button
-                type="submit"
-                class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
-                onclick="hideWarning()"
-              >
-                Cancel
-              </button>
-              </div>
+            </button>
+            </div>
+            <div class="mt-6">
+              <button
+              class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
+              onclick="hideWarning()"
+            >
+              Cancel
+            </button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
   </div>
 
 </body>
 
 <script>
-  function showAlert() {
-    document.getElementById('warning-message').style.display = 'flex'; 
+  function showAlert(id) {
+    document.getElementById('warning-message').style.display = 'flex';
+    localStorage.setItem('idToDelete', id);
   }
 
   function hideWarning() {
-    document.getElementById('warning-message').style.display = 'none'; 
+    document.getElementById('warning-message').style.display = 'none';
+    localStorage.removeItem('idToDelete');
+  }
+
+  function deleteOrder() {
+    const id = localStorage.getItem('idToDelete');
+    const url = "/project-programation/order?id=" + id;
+    fetch(url, {
+      method: 'DELETE',
+    })
+    .then(data => {
+      document.getElementById(id).remove();
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Deleted successfully"
+      });
+      hideWarning();
+    })
+    .catch((error) => {
+      console.log(error);
+      const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+      Toast.fire({
+        icon: "error",
+        title: "Something went wrong!, Contact with the administrator"
+      });
+      hideWarning();
+    });
   }
 </script>

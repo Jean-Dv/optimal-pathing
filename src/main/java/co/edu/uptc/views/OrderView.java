@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
 @WebServlet("/order")
 public class OrderView extends HttpServlet {
   private static final Logger logger = LogManager.getLogger(OrderView.class);
-  
+
 
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
@@ -81,7 +81,7 @@ public class OrderView extends HttpServlet {
     ServletUtils.forward(req, resp, "/pages/addorder.jsp");
 
   }
-  
+
 
   protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
@@ -89,8 +89,10 @@ public class OrderView extends HttpServlet {
       MongoClient mongoClient =
           MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
       OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
-      OrderController orderController = new OrderController(orderRepository);
+      final OrderController orderController = new OrderController(orderRepository);
       String idFromParameter = req.getParameter("id");
+      System.out.println(idFromParameter);
+      System.out.println(StringUtils.isUuid(idFromParameter));
       if (idFromParameter == null || !StringUtils.isUuid(idFromParameter)) {
         resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return;

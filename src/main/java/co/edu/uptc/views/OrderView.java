@@ -149,7 +149,6 @@ public class OrderView extends HttpServlet {
     order.setCashonDelivery(isCashon != null ? true : false);
     order.setShippingValue(Integer.parseInt(price));
     order.setStatus(Status.fromString(state));
-
     orderController.edit(order);
     resp.sendRedirect("/project-programation/orders");
     return;

@@ -21,7 +21,6 @@
         <div class="lg:col-span-2 lg:py-12">
           <h3 class="text-4xl text-black">Edit order</h3>
         </div>
-
         <% Order order = (Order) request.getSession().getAttribute("order"); %>
         <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
           <form action="/project-programation/order" method="post" class="space-y-4">
@@ -40,7 +39,6 @@
                     id="cashonDelivery" <%=order.isCashonDelivery() ? "checked" : "" %>
                     name="cashonDelivery"/>
                 </div>
-
                 <div>
                   <strong class="font-medium text-gray-900 sm:text-xs sm:font-sm"> Cashon Delivery </strong>
                 </div>
@@ -60,7 +58,6 @@
                       placeholder="Nombre remitente"
                        value="${order.destinationAddress}"
                     />
-
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
@@ -81,7 +78,6 @@
                       placeholder="Descripción de dirección"
                       value="${order.destinationAddress}"
                     />
-
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
@@ -104,7 +100,6 @@
                       placeholder="Dirección destino"
                       value="${order.remitterName}"
                     />
-
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
@@ -146,7 +141,6 @@
                       </c:if>
                   </label>
               </div>
-
             </div>
                  <div class="flex flex-row gap-x-16 sm:flex-col sm:gap-y-4">
                     <div class="flex-auto w-full">
@@ -159,13 +153,11 @@
                               placeholder="Precio"
                               value="${order.shippingValue}"
                         />
-
                         <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                           Price
                         </span>
                       </label>
                     </div>
-
                     <div class="flex-auto w-full sm:ml-4">
                       <div class="flex gap-4">
                         <div class="w-full sm:w-1/2">
@@ -183,7 +175,6 @@
                             <option value="EC">Eric Clapton</option>
                           </select>
                         </div>
-
                         <div class="w-full sm:w-1/2">
                           <select name="state"
                                   id="state"
@@ -210,7 +201,6 @@
                       </div>
                     </div>
                   </div>     
-
               <button
                 type="submit"
                 class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
@@ -223,16 +213,11 @@
                       ${all_fields_required}
                   </div>
                 </c:if>
-    
             </div>
           </form>
         </div>
       </div>
     </div>
   </main>
-  <script>
-    document.getElementById("state").value 
-    console.log()
-  </script>
 </body>
 

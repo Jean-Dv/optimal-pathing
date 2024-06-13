@@ -10,7 +10,7 @@
   <jsp:include page="../components/navbar.jsp">
     <jsp:param name="section" value="Ordenes" />
     <jsp:param name="hrefSection" value="orders.jsp" />
-    <jsp:param name="title" value="Agregar orden" />
+    <jsp:param name="title" value="Add order" />
     <jsp:param name="hrefTitle" value="addorder.jsp" />
   </jsp:include>
   <%@ include file="../components/sidemenu.jsp" %>
@@ -19,23 +19,22 @@
     <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
         <div class="lg:col-span-2 lg:py-12">
-          <h3 class="text-4xl text-black">Agregar orden</h3>
+          <h3 class="text-4xl text-black">Add order</h3>
         </div>
 
         <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
-          <form class="space-y-4">
+          <form action="/project-programation/order" method="post" class="space-y-4" >
             <div>
               <label
-                for="isCashOn"
                 class="flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-blue-50"
               >
                 <div class="flex items-center">
                   &#8203;
-                  <input type="checkbox" class="size-4 rounded border-gray-300" id="isCashOn" />
+                  <input type="checkbox" class="size-4 rounded border-gray-300" name="isCashOn"/>
                 </div>
 
                 <div>
-                  <strong class="font-medium text-gray-900 sm:text-xs sm:font-sm"> Contraentrega </strong>
+                  <strong class="font-medium text-gray-900 sm:text-xs sm:font-sm"> Cashon Delivery </strong>
                 </div>
               </label>
             </div>
@@ -43,19 +42,21 @@
               <div class="flex-auto">
                 <label
                     for="destinationAddress"
+                    name="destinationAddress"
                     class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
                   >
                     <input
                       type="text"
-                      id="remitterName"
+                      id="destinationAddress"
+                      name="destinationAddress"
                       class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
-                      placeholder="Nombre remitente"
+                      placeholder="Destination Address"
                     />
 
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
-                      Dirección destino
+                      Destination Address
                     </span>
                   </label>
               </div>
@@ -67,14 +68,15 @@
                     <input
                       type="text"
                       id="descriptionAddress"
+                      name="descriptionAddress"
                       class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 sm:p-3 w-full"
-                      placeholder="Descripción de dirección"
+                      placeholder="Description Address"
                     />
 
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
-                      Descripción de dirección
+                      Description Address
                     </span>
                   </label>
               </div>
@@ -88,15 +90,23 @@
                     <input
                       type="text"
                       id="remitterName"
+                      name="remitterName"
                       class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
-                      placeholder="Dirección destino"
+                      placeholder="Remitter Name"
                     />
 
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
-                      Nombre remitente
+                      Remitter Name
                     </span>
+                    <c:if test="${not empty errorMessageString}">
+                          <div
+                            class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                            style="color: red;">
+                            ${errorMessageString}
+                          </div>
+                    </c:if>
                   </label>
               </div>
               <div class="flex-auto">
@@ -107,15 +117,23 @@
                     <input
                       type="text"
                       id="addresseeName"
+                      name="addresseeName"
                       class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 sm:p-3 w-full"
-                      placeholder="Nombre destinatario"
+                      placeholder="Addressee Name"
                     />
 
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
-                      Nombre destinatario
+                     Addressee Name
                     </span>
+                    <c:if test="${not empty errorMessageString}">
+                          <div
+                            class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                            style="color: red;">
+                            ${errorMessageString}
+                          </div>
+                    </c:if>
                   </label>
               </div>
 
@@ -123,20 +141,21 @@
             <div class="flex flex-row gap-x-16 sm:flex-col sm:gap-y-4">
               <div class="flex-auto w-full">
                 <label
-                    for="remitterName"
+                    for="price"
                     class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
                   >
                     <input
                       type="number"
                       id="price"
+                      name="price"
                       class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
-                      placeholder="Precio"
+                      placeholder="Price"
                     />
 
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
-                      Precio
+                     Price
                     </span>
                 </label>
               </div>
@@ -167,6 +186,12 @@
                 Envíar
               </button>
             </div>
+            <c:if test="${not empty errorMessage}">
+              <div class="lg:col-span-2 lg:py-12 lg:text-center lg:pl-8 flex items-center justify-center"
+                style="color: red;">
+                ${errorMessage}
+              </div>
+            </c:if>
           </form>
         </div>
       </div>

@@ -26,7 +26,6 @@ import org.apache.logging.log4j.Logger;
 public class OrderView extends HttpServlet {
   private static final Logger logger = LogManager.getLogger(OrderView.class);
 
-
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
@@ -91,8 +90,6 @@ public class OrderView extends HttpServlet {
       OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
       final OrderController orderController = new OrderController(orderRepository);
       String idFromParameter = req.getParameter("id");
-      System.out.println(idFromParameter);
-      System.out.println(StringUtils.isUuid(idFromParameter));
       if (idFromParameter == null || !StringUtils.isUuid(idFromParameter)) {
         resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         return;

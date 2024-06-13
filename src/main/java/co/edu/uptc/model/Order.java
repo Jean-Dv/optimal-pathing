@@ -231,7 +231,7 @@ public class Order extends AggregateRoot {
     LocalDate deadline = LocalDate.parse(document.getString("deadline"));
     String sourceAddress = document.getString("sourceAddress");
     String destinationAddress = document.getString("destinationAddress");
-    Status status = Status.fromString(document.getString("status"));
+    Status status = Status.valueOf(document.getString("status"));
     String addresseeName = document.getString("addresseeName");
     String remitterName = document.getString("remitterName");
     int shippingValue = document.getInteger("shippingValue");

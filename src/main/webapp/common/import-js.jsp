@@ -14,12 +14,3 @@
       display: none;
     }
 </style>
-<script>
-    function showAlert() {
-      document.getElementById('warning-message').style.display = 'flex'; 
-    }
-
-    function hideWarning() {
-      document.getElementById('warning-message').style.display = 'none'; 
-    }
-</script>

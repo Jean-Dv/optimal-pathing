@@ -6,6 +6,7 @@ import co.edu.uptc.infrastructure.orders.MongoOrderRepository;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
 import co.edu.uptc.model.Responsible;
+import co.edu.uptc.model.Status;
 import co.edu.uptc.utils.ServletUtils;
 import co.edu.uptc.utils.StringUtils;
 import com.mongodb.client.MongoClient;
@@ -74,9 +75,9 @@ public class OrderView extends HttpServlet {
 
     // TODO: You must complete the spaces since you are only jarcodiating.
 
-    Order order = new Order(LocalDate.now(), LocalDate.now(), "", destinationAddress, "",
-        addresseeName, remitterName, Integer.parseInt(price), cashonDelivery, descriptionAddress,
-        "", new Responsible(responsible, "", "", ""));
+    Order order = new Order(LocalDate.now(), LocalDate.now(), "", destinationAddress,
+        Status.WAREHOUSE_EXIT, addresseeName, remitterName, Integer.parseInt(price), cashonDelivery,
+        descriptionAddress, "", new Responsible(responsible, "", "", ""));
     orderController.add(order);
 
   }
@@ -147,13 +148,13 @@ public class OrderView extends HttpServlet {
     order.setAddresseeName(addresseeName);
     order.setCashonDelivery(isCashon != null ? true : false);
     order.setShippingValue(Integer.parseInt(price));
-    order.setStatus(state);
+    order.setStatus(Status.fromString(state));
 
     orderController.edit(order);
     resp.sendRedirect("/project-programation/orders");
     return;
   }
-  
+
   @Override
   protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {

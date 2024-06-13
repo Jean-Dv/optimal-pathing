@@ -171,7 +171,7 @@
                         <div class="w-full sm:w-1/2">
                           <select name="responsible"
                                   id="responsible"
-                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent text-gray-700 text-sm p-2"
+                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md text-base bg-transparent p-2"
                           >
                             <option value="">Responsable</option>
                             <option value="JM">John Mayer</option>
@@ -187,14 +187,24 @@
                         <div class="w-full sm:w-1/2">
                           <select name="state"
                                   id="state"
-                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent border-gray-300 text-gray-700 text-sm p-2"
+                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent border-gray-300 p-2"
                           >
-                              <option value="">state</option>
-                              <option value="Delevered">Delivered</option>
-                              <option value="Delay">Delay</option>
-                              <option value="Devolution">Devolution</option>
-                              <option value="On Way">On Way</option>
-                              <option value="Warehouse Exit">Warehouse Exit</option>
+                              <option value="">State</option>
+                              <option value="Delivered"
+                                <%= order.getStatus().getStatus().equals("Delivered") ? "selected" : "" %>
+                              >Delivered</option>
+                              <option value="Delay"
+                                <%= order.getStatus().getStatus().equals("Delay") ? "selected" : "" %>
+                              >Delay</option>
+                              <option value="Devolution"
+                                <%= order.getStatus().getStatus().equals("Devolution") ? "selected" : "" %>
+                              >Devolution</option>
+                              <option value="On way"
+                                <%= order.getStatus().getStatus().equals("On way") ? "selected" : "" %>
+                              >On Way</option>
+                              <option value="Warehouse exit"
+                                <%= order.getStatus().getStatus().equals("Warehouse exit") ? "selected" : "" %>
+                              >Warehouse Exit</option>
                           </select>
                         </div>
                       </div>
@@ -220,4 +230,9 @@
       </div>
     </div>
   </main>
-  </body>
+  <script>
+    document.getElementById("state").value 
+    console.log()
+  </script>
+</body>
+

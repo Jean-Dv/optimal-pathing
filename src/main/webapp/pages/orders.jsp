@@ -1,4 +1,6 @@
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="co.edu.uptc.model.Order" %>
 <html lang="en">
 <head>
     <title>Home</title>
@@ -71,20 +73,20 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          <c:forEach var="order" items="${orders}">
-            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">${order.id}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.remitterName}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.status}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.destinationAddress}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.addresseeName}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700">${order.cashOnDelivery}</td>
+          <% List<Order> orders = (List<Order>) request.getSession().getAttribute("orders"); %>
+          <% for (Order order : orders) { %>
+            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= order.getId() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getRemitterName() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getStatus() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getDestinationAddress() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getAddresseeName() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.isCashonDelivery() %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700">
                 <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
                   <button
                     class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
                     title="Edit order"
-                    onclick="window.location.href='editorder.jsp?id=${order.id}'"
-                  >
+                      onclick="window.location.href='/project-programation/order?id=<%= order.getId() %>&action=edit'">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -121,7 +123,7 @@
                 </span>
               </td>
             </tr>
-          </c:forEach>
+          <% } %>
         </tbody>
       </table>
     </div>

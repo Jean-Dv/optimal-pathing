@@ -35,4 +35,12 @@ public interface OrderRepository {
    * @return Deleted order.
    */
   Order erase(String orderId);
+
+  /**
+   * Method that allows you to find an order by id.
+   *
+   * @param orderId - Order to find.
+   * @return Find order.
+   */
+  Order findById(String orderId);
 }

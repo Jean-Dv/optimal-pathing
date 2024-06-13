@@ -50,4 +50,8 @@ public class OrderController {
   public Order delete(String orderId) {
     return this.repository.erase(orderId);
   }
+
+  public Order getById(String id) {
+    return this.repository.findById(id);
+  }
 }

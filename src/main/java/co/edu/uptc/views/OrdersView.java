@@ -32,7 +32,7 @@ public class OrdersView extends HttpServlet {
     OrderController orderController = new OrderController(orderRepository);
     List<Order> orders = orderController.getAll();
 
-    req.setAttribute("orders", orders);
+    req.getSession().setAttribute("orders", orders);
     ServletUtils.forward(req, resp, "/pages/orders.jsp");
   }
 }

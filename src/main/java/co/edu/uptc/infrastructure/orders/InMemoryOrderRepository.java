@@ -50,7 +50,8 @@ public class InMemoryOrderRepository implements OrderRepository {
 
   @Override
   public Order findById(String id) {
-    return this.orders.stream().filter(order -> order.getId().equals(id))
-        .collect(Collectors.toList()).get(0);
+    return this.orders.stream().filter(order -> order.getId().toString().equals(id)).findFirst()
+        .orElse(null);
+
   }
 }

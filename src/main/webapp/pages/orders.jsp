@@ -78,10 +78,10 @@
             <tr id="<%= order.getId() %>">
               <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= order.getId() %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getRemitterName() %></td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getStatus() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getStatus().getStatus() %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getDestinationAddress() %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getAddresseeName() %></td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.isCashonDelivery() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.isCashonDelivery() ? "✔️" : "❌" %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700">
                 <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
                   <button

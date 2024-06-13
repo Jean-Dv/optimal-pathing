@@ -21,7 +21,6 @@
         <div class="lg:col-span-2 lg:py-12">
           <h3 class="text-4xl text-black">Edit order</h3>
         </div>
-
         <% Order order = (Order) request.getSession().getAttribute("order"); %>
         <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
           <form action="/project-programation/order" method="post" class="space-y-4">
@@ -40,7 +39,6 @@
                     id="cashonDelivery" <%=order.isCashonDelivery() ? "checked" : "" %>
                     name="cashonDelivery"/>
                 </div>
-
                 <div>
                   <strong class="font-medium text-gray-900 sm:text-xs sm:font-sm"> Cashon Delivery </strong>
                 </div>
@@ -60,7 +58,6 @@
                       placeholder="Nombre remitente"
                        value="${order.destinationAddress}"
                     />
-
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
@@ -81,7 +78,6 @@
                       placeholder="Descripción de dirección"
                       value="${order.destinationAddress}"
                     />
-
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
@@ -104,7 +100,6 @@
                       placeholder="Dirección destino"
                       value="${order.remitterName}"
                     />
-
                     <span
                       class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
@@ -146,7 +141,6 @@
                       </c:if>
                   </label>
               </div>
-
             </div>
                  <div class="flex flex-row gap-x-16 sm:flex-col sm:gap-y-4">
                     <div class="flex-auto w-full">
@@ -159,19 +153,17 @@
                               placeholder="Precio"
                               value="${order.shippingValue}"
                         />
-
                         <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                           Price
                         </span>
                       </label>
                     </div>
-
                     <div class="flex-auto w-full sm:ml-4">
                       <div class="flex gap-4">
                         <div class="w-full sm:w-1/2">
                           <select name="responsible"
                                   id="responsible"
-                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent text-gray-700 text-sm p-2"
+                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md text-base bg-transparent p-2"
                           >
                             <option value="">Responsable</option>
                             <option value="JM">John Mayer</option>
@@ -183,24 +175,32 @@
                             <option value="EC">Eric Clapton</option>
                           </select>
                         </div>
-
                         <div class="w-full sm:w-1/2">
                           <select name="state"
                                   id="state"
-                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent border-gray-300 text-gray-700 text-sm p-2"
+                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent border-gray-300 p-2"
                           >
-                              <option value="">state</option>
-                              <option value="Delevered">Delivered</option>
-                              <option value="Delay">Delay</option>
-                              <option value="Devolution">Devolution</option>
-                              <option value="On Way">On Way</option>
-                              <option value="Warehouse Exit">Warehouse Exit</option>
+                              <option value="">State</option>
+                              <option value="Delivered"
+                                <%= order.getStatus().getStatus().equals("Delivered") ? "selected" : "" %>
+                              >Delivered</option>
+                              <option value="Delay"
+                                <%= order.getStatus().getStatus().equals("Delay") ? "selected" : "" %>
+                              >Delay</option>
+                              <option value="Devolution"
+                                <%= order.getStatus().getStatus().equals("Devolution") ? "selected" : "" %>
+                              >Devolution</option>
+                              <option value="On way"
+                                <%= order.getStatus().getStatus().equals("On way") ? "selected" : "" %>
+                              >On Way</option>
+                              <option value="Warehouse exit"
+                                <%= order.getStatus().getStatus().equals("Warehouse exit") ? "selected" : "" %>
+                              >Warehouse Exit</option>
                           </select>
                         </div>
                       </div>
                     </div>
                   </div>     
-
               <button
                 type="submit"
                 class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
@@ -213,11 +213,11 @@
                       ${all_fields_required}
                   </div>
                 </c:if>
-    
             </div>
           </form>
         </div>
       </div>
     </div>
   </main>
-  </body>
+</body>
+

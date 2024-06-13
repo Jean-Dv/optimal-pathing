@@ -2,6 +2,7 @@ package co.edu.uptc.controller.orders;
 
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
+import co.edu.uptc.model.Status;
 import java.util.List;
 
 /**
@@ -53,5 +54,21 @@ public class OrderController {
 
   public Order getById(String id) {
     return this.repository.findById(id);
+  }
+
+  /**
+   * Method that allows you to change the status of the order.
+   *
+   * @param orderId - Order ID to change status.
+   * @param newStatus - State by which it is changed.
+   */
+  public boolean editStatus(String orderId, Status newStatus) {
+    Order order = getById(orderId);
+    if (order != null) {
+      order.setStatus(newStatus);
+      this.repository.edit(order);
+      return true;
+    }
+    return false;
   }
 }

@@ -3,7 +3,6 @@ package co.edu.uptc.infrastructure.orders;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  * Class that represents the repository of orders in memory.

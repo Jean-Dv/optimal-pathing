@@ -83,31 +83,28 @@
             </div>
             <div class="flex flex-row gap-x-16 sm:flex-col sm:gap-y-4">
               <div class="flex-auto">
-                <label
-                    for="remitterName"
-                    class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+                  <label
+                      for="remitterName"
+                      class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
                   >
-                    <input
-                      type="text"
-                      id="remitterName"
-                      name="remitterName"
-                      class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
-                      placeholder="Remitter Name"
-                    />
-
-                    <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
-                    >
-                      Remitter Name
-                    </span>
-                    <c:if test="${not empty errorMessageString}">
-                          <div
-                            class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
-                            style="color: red;">
-                            ${errorMessageString}
-                          </div>
-                    </c:if>
+                      <input
+                          type="text"
+                          id="remitterName"
+                          name="remitterName"
+                          class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
+                          placeholder="${not empty errorMessageString ? '' : 'Remitter Name'}"
+                      />
+                      <span
+                          class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                      >
+                          Remitter Name
+                      </span>
                   </label>
+                  <c:if test="${not empty errorMessageString}">
+                      <div class="mt-1 text-xs text-red-500">
+                          ${errorMessageString}
+                      </div>
+                  </c:if>
               </div>
               <div class="flex-auto">
                 <label
@@ -118,8 +115,8 @@
                       type="text"
                       id="addresseeName"
                       name="addresseeName"
-                      class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 sm:p-3 w-full"
-                      placeholder="Addressee Name"
+                      class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
+                      placeholder="${not empty errorMessageString ? '' :'Addressee Name'}"
                     />
 
                     <span
@@ -127,14 +124,12 @@
                     >
                      Addressee Name
                     </span>
-                    <c:if test="${not empty errorMessageString}">
-                          <div
-                            class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
-                            style="color: red;">
+                  </label>
+                  <c:if test="${not empty errorMessageString}">
+                          <div class="mt-1 text-xs text-red-500">
                             ${errorMessageString}
                           </div>
-                    </c:if>
-                  </label>
+                  </c:if>
               </div>
 
             </div>

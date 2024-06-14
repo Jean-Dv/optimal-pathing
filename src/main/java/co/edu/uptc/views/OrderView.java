@@ -37,28 +37,29 @@ public class OrderView extends HttpServlet {
       this.doPut(req, resp);
       return;
     }
-    String cashonDeliveryServlet = req.getParameter("isCashOn"); // on para si, y null para no
+    String cashonDelivery = req.getParameter("isCashOn"); // on para si, y null para no
     String destinationAddress = req.getParameter("destinationAddress");
     String descriptionAddress = req.getParameter("descriptionAddress");
     String remitterName = req.getParameter("remitterName");
     String addresseeName = req.getParameter("addresseeName");
     String price = req.getParameter("price");
     String responsible = req.getParameter("responsible");
-    boolean cashonDelivery = false;
-
+    boolean isCashOn = false;
 
     if (descriptionAddress == null || destinationAddress == null || remitterName == null
-        || addresseeName == null || price == null || responsible == null) {
+        || addresseeName == null || price == null || responsible == null
+        || descriptionAddress.isEmpty() || destinationAddress.isEmpty() || price.isEmpty()
+        || responsible.isEmpty() || remitterName.isEmpty() || addresseeName.isEmpty()) {
 
       req.setAttribute("errorMessage", "Error: All fields are required");
       ServletUtils.forward(req, resp, "/pages/addorder.jsp");
       return;
     }
 
-    if (cashonDeliveryServlet != null && cashonDeliveryServlet.equals("on")) {
-      cashonDelivery = true;
+    if (cashonDelivery != null && cashonDelivery.equals("on")) {
+      isCashOn = true;
     } else {
-      cashonDelivery = false;
+      isCashOn = false;
     }
 
     if (!remitterName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")
@@ -76,9 +77,11 @@ public class OrderView extends HttpServlet {
     // TODO: You must complete the spaces since you are only jarcodiating.
 
     Order order = new Order(LocalDate.now(), LocalDate.now(), "", destinationAddress,
-        Status.WAREHOUSE_EXIT, addresseeName, remitterName, Integer.parseInt(price), cashonDelivery,
+        Status.WAREHOUSE_EXIT, addresseeName, remitterName, Integer.parseInt(price), isCashOn,
         descriptionAddress, "", new Responsible(responsible, "", "", ""));
     orderController.add(order);
+    resp.sendRedirect("/project-programation/orders");
+    return;
 
   }
 

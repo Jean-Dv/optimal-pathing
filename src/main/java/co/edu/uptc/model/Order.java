@@ -12,7 +12,7 @@ public class Order extends AggregateRoot {
   private LocalDate deadline;
   private String sourceAddress;
   private String destinationAddress;
-  private String status; // change when state class is created
+  private Status status; // change when state class is created
   private String addresseeName;
   private String remitterName;
   private int shippingValue;
@@ -41,7 +41,7 @@ public class Order extends AggregateRoot {
    * @param responsible The responsible person associated with the order.
    */
   public Order(UUID id, LocalDate dateIssue, LocalDate deadline, String sourceAddress,
-      String destinationAddress, String status, String addresseeName, String remitterName,
+      String destinationAddress, Status status, String addresseeName, String remitterName,
       int shippingValue, boolean cashonDelivery, String description, String observation,
       Responsible responsible) {
     super(id);
@@ -76,7 +76,7 @@ public class Order extends AggregateRoot {
    * @param responsible The responsible person associated with the order.
    */
   public Order(LocalDate dateIssue, LocalDate deadline, String sourceAddress,
-      String destinationAddress, String status, String addresseeName, String remitterName,
+      String destinationAddress, Status status, String addresseeName, String remitterName,
       int shippingValue, boolean cashonDelivery, String description, String observation,
       Responsible responsible) {
     super();
@@ -126,11 +126,11 @@ public class Order extends AggregateRoot {
     this.destinationAddress = destinationAddress;
   }
 
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
@@ -231,7 +231,7 @@ public class Order extends AggregateRoot {
     LocalDate deadline = LocalDate.parse(document.getString("deadline"));
     String sourceAddress = document.getString("sourceAddress");
     String destinationAddress = document.getString("destinationAddress");
-    String status = document.getString("status");
+    Status status = Status.valueOf(document.getString("status"));
     String addresseeName = document.getString("addresseeName");
     String remitterName = document.getString("remitterName");
     int shippingValue = document.getInteger("shippingValue");

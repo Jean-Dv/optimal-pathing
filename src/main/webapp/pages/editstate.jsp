@@ -19,8 +19,9 @@
     <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
         <div class="lg:col-span-2 lg:py-12">
-          <h3 class="text-4xl text-black">Edit order</h3>
+          <h3 class="text-4xl text-black">Uuid Orden</h3>
         </div>
+
         <% Order order = (Order) request.getSession().getAttribute("order"); %>
         <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
           <form action="/project-programation/order" method="post" class="space-y-4">
@@ -29,7 +30,7 @@
             <div>
               <label
                 for="isCashOn"
-                class="flex cursor-pointer items-start gap-4 rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 has-[:checked]:bg-blue-50"
+                class="flex items-start gap-4 rounded-lg border border-gray-200 p-4 transition bg-gray-200  has-[:checked]:bg-blue-50 cursor-not-allowed"
               >
                 <div class="flex items-center">
                   &#8203;
@@ -37,10 +38,14 @@
                     type="checkbox"
                     class="size-4 rounded border-gray-300" 
                     id="cashonDelivery" <%=order.isCashonDelivery() ? "checked" : "" %>
-                    name="cashonDelivery"/>
+                    name="cashonDelivery"
+                    disabled
+                    />
+                    
                 </div>
+
                 <div>
-                  <strong class="font-medium text-gray-900 sm:text-xs sm:font-sm"> Cashon Delivery </strong>
+                  <strong  class="font-medium text-gray-900 sm:text-xs sm:font-sm"> Cashon Delivery </strong>
                 </div>
               </label>
             </div>
@@ -54,12 +59,14 @@
                       type="text"
                       id="destinationAddress"
                       name="destinationAddress"
-                      class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
+                      class="border-none bg-gray-200 text-gray-700 p-2 w-full cursor-not-allowed"
                       placeholder="Nombre remitente"
-                       value="${order.destinationAddress}"
+                      value="${order.destinationAddress}"
+                      readonly
                     />
+
                     <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
                       Destination Address
                     </span>
@@ -70,16 +77,18 @@
                     for="descriptionAddress"
                     class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
                   >
-                    <input
-                      type="text"
-                      id="descriptionAddress"
-                      name="descriptionAddress"
-                      class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 sm:p-3 w-full"
-                      placeholder="Descripción de dirección"
-                      value="${order.destinationAddress}"
-                    />
+                   <input
+                        type="text"
+                        id="descriptionAddress"
+                        name="descriptionAddress"
+                        class="border-none bg-gray-200 text-gray-700 p-2 w-full cursor-not-allowed"
+                        placeholder="Descripción de dirección"
+                        value="${order.destinationAddress}"
+                        readonly
+                      />
+
                     <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
                       Description Address
                     </span>
@@ -96,21 +105,18 @@
                       type="text"
                       id="remitterName"
                       name="remitterName"
-                      class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
+                      class="border-none bg-gray-200 text-gray-700 p-2 w-full cursor-not-allowed"
                       placeholder="Dirección destino"
                       value="${order.remitterName}"
+                      readonly
                     />
+
                     <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
                       Remitter Name
                     </span>
                   </label>
-                   <c:if test="${not empty only_letters_are_accepted}">
-                     <div class="mt-1 text-xs text-red-500">
-                          ${only_letters_are_accepted}
-                      </div>
-                   </c:if>
               </div>
               <div class="flex-auto">
                 <label
@@ -121,23 +127,20 @@
                       type="text"
                       id="addresseeName"
                       name="addresseeName"
-                      class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 sm:p-3 w-full"
+                      class="border-none bg-gray-200 text-gray-700 p-2 w-full cursor-not-allowed"
                       placeholder="Nombre destinatario"
                       value="${order.addresseeName}"
+                      readonly
                     />
 
                     <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
+                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
                     >
                       Addressee Name
                     </span>
                   </label>
-                  <c:if test="${not empty only_letters_are_accepted}">
-                    <div class="mt-1 text-xs text-red-500">
-                         ${only_letters_are_accepted}
-                     </div>
-                  </c:if>
               </div>
+
             </div>
                  <div class="flex flex-row gap-x-16 sm:flex-col sm:gap-y-4">
                     <div class="flex-auto w-full">
@@ -146,33 +149,37 @@
                         <input type="number"
                               id="price"
                               name="price"
-                              class="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 p-2 w-full"
+                              class="border-none bg-gray-200 text-gray-700 p-2 w-full cursor-not-allowed"
                               placeholder="Precio"
                               value="${order.shippingValue}"
+                              readonly
                         />
-                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
+
+                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
                           Price
                         </span>
                       </label>
                     </div>
+
                     <div class="flex-auto w-full sm:ml-4">
                       <div class="flex gap-4">
-                        <div class="w-full sm:w-1/2">
-                          <select name="responsible"
-                                  id="responsible"
-                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md text-base bg-transparent p-2"
-                          >
-                            <option value="">Responsable</option>
-                            <option value="JM" <%= order.getResponsible().getName().equals("JM") ? "selected" : "" %>>John Mayer</option>
-                            <option value="SRV" <%= order.getResponsible().getName().equals("SRV") ? "selected" : "" %>>Stevie Ray Vaughn</option>
-                            <option value="JH" <%= order.getResponsible().getName().equals("JH") ? "selected" : "" %>>Jimi Hendrix</option>
-                            <option value="BBK" <%= order.getResponsible().getName().equals("BBK") ? "selected" : "" %>>B.B King</option>
-                            <option value="AK" <%= order.getResponsible().getName().equals("AK") ? "selected" : "" %>>Albert King</option>
-                            <option value="BG" <%= order.getResponsible().getName().equals("BG") ? "selected" : "" %>>Buddy Guy</option>
-                            <option value="EC" <%= order.getResponsible().getName().equals("EC") ? "selected" : "" %>>Eric Clapton</option>
-                          </select>
-                        </div>
-                        <div class="w-full sm:w-1/2">
+                       <div class="w-full sm:w-1/2">
+                        <select name="responsible"
+                                id="responsible"
+                               class="border bg-gray-300 text-gray-700 p-2 w-full cursor-not-allowed rounded-md"
+                                disabled>
+                          <option value="">Responsable</option>
+                          <option value="JM" <%= order.getResponsible().equals("JM") ? "selected" : "" %>>John Mayer</option>
+                          <option value="SRV" <%= order.getResponsible().getName().equals("SRV") ? "selected" : "" %>>Stevie Ray Vaughn</option>
+                          <option value="JH" <%= order.getResponsible().getName().equals("JH") ? "selected" : "" %>>Jimi Hendrix</option>
+                          <option value="BBK" <%= order.getResponsible().getName().equals("BBK") ? "selected" : "" %>>B.B King</option>
+                          <option value="AK" <%= order.getResponsible().getName().equals("AK") ? "selected" : "" %>>Albert King</option>
+                          <option value="BG" <%= order.getResponsible().getName().equals("BG") ? "selected" : "" %>>Buddy Guy</option>
+                          <option value="EC" <%= order.getResponsible().getName().equals("EC") ? "selected" : "" %>>Eric Clapton</option>
+                        </select>
+                      </div>
+
+                      <div class="w-full sm:w-1/2">
                           <select name="state"
                                   id="state"
                                   class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent border-gray-300 p-2"
@@ -193,16 +200,20 @@
                               <option value="Warehouse exit"
                                 <%= order.getStatus().getStatus().equals("Warehouse exit") ? "selected" : "" %>
                               >Warehouse Exit</option>
+
+                                 
+
                           </select>
                         </div>
                       </div>
                     </div>
                   </div>     
+
               <button
                 type="submit"
                 class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
               >
-                Edit
+                Edit state
               </button>
                 <c:if test="${not empty all_fields_required}">
                   <div class="lg:col-span-2 lg:py-12 lg:text-center lg:pl-8 flex items-center justify-center"
@@ -210,11 +221,11 @@
                       ${all_fields_required}
                   </div>
                 </c:if>
+    
             </div>
           </form>
         </div>
       </div>
     </div>
   </main>
-</body>
-
+  </body>

@@ -84,6 +84,25 @@
               <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.isCashonDelivery() ? "✔️" : "❌" %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700">
                 <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
+                 <button
+                        class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
+                        title="Edit order"
+                          onclick="window.location.href='/project-programation/order?id=<%= order.getId() %>&action=editstate'">
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      stroke-width="2" 
+                      stroke-linecap="round" 
+                      stroke-linejoin="round" 
+                      class="h-4 w-4"
+                      >
+                      <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 2c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+
+                  </button>
                   <button
                     class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
                     title="Edit order"

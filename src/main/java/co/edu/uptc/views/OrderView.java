@@ -140,7 +140,7 @@ public class OrderView extends HttpServlet {
 
       Status status = Status.fromString(state);
       orderController.editStatus(id, status);
-
+      
       resp.sendRedirect("/project-programation/orders");
     } else {
 
@@ -191,8 +191,6 @@ public class OrderView extends HttpServlet {
       resp.sendRedirect("/project-programation/orders");
     }
   }
-
-
 
   @Override
   protected void doDelete(HttpServletRequest req, HttpServletResponse resp)

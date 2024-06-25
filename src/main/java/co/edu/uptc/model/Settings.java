@@ -32,6 +32,7 @@ public class Settings extends AggregateRoot {
     this.sourceAddress = sourceAddress;
   }
 
+
   public String getSourceAddress() {
     return sourceAddress;
   }

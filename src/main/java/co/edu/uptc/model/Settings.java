@@ -59,7 +59,7 @@ public class Settings extends AggregateRoot {
    * @param document Document to convert.
    * @return The settings object.
    */
-  public static Settings fromSettings(Document document) {
+  public static Settings fromDocument(Document document) {
     UUID id = UUID.fromString(document.getString("_id"));
     String sourceAddress = document.getString("sourceAddress");
     return new Settings(id, sourceAddress);

@@ -31,7 +31,7 @@ public class MongoSettingsRepository extends MongoRepository<Settings>
     FindIterable<Document> documents = this.searchAll();
     ArrayList<Settings> settings = new ArrayList<>();
     for (Document document : documents) {
-      settings.add(Settings.fromSettings(document));
+      settings.add(Settings.fromDocument(document));
     }
     return settings;
   }
@@ -39,19 +39,19 @@ public class MongoSettingsRepository extends MongoRepository<Settings>
   @Override
   public Settings edit(Settings editSetting) {
     Document settingDocument = this.persist(editSetting.getId().toString(), editSetting);
-    return settingDocument != null ? Settings.fromSettings(settingDocument) : null;
+    return settingDocument != null ? Settings.fromDocument(settingDocument) : null;
   }
 
   @Override
   public Settings erase(String settingId) {
     Document settingDocument = this.remove(settingId);
-    return settingDocument != null ? Settings.fromSettings(settingDocument) : null;
+    return settingDocument != null ? Settings.fromDocument(settingDocument) : null;
   }
 
   @Override
   public Settings findById(String settingId) {
     Document settingDocument = this.searchById(settingId);
-    return settingDocument != null ? Settings.fromSettings(settingDocument) : null;
+    return settingDocument != null ? Settings.fromDocument(settingDocument) : null;
   }
 
   @Override

@@ -1,5 +1,11 @@
 package co.edu.uptc.seed;
 
+import co.edu.uptc.infrastructure.MongoClientFactory;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,12 +16,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoCollection;
-import co.edu.uptc.infrastructure.MongoClientFactory;
+
 
 class Main {
   private static final Logger logger = LogManager.getLogger(Main.class);

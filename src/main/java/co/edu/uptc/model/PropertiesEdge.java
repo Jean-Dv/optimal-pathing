@@ -64,7 +64,7 @@ public class PropertiesEdge implements Documentable {
     this.junction = junction;
   }
 
-  public double getStartNode() {
+  public int getStartNode() {
     return startNode;
   }
 

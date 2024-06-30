@@ -1,11 +1,14 @@
 package co.edu.uptc.views;
 
 import co.edu.uptc.controller.orders.OrderController;
+import co.edu.uptc.controller.settings.SettingsController;
 import co.edu.uptc.infrastructure.MongoClientFactory;
 import co.edu.uptc.infrastructure.orders.MongoOrderRepository;
+import co.edu.uptc.infrastructure.settings.MongoSettingsRepository;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
 import co.edu.uptc.model.Responsible;
+import co.edu.uptc.model.SettingsRepository;
 import co.edu.uptc.model.Status;
 import co.edu.uptc.utils.ServletUtils;
 import co.edu.uptc.utils.StringUtils;
@@ -74,9 +77,16 @@ public class OrderView extends HttpServlet {
     OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
     OrderController orderController = new OrderController(orderRepository);
 
-    // TODO: You must complete the spaces since you are only jarcodiating.
+    SettingsRepository settingsRepository = new MongoSettingsRepository(mongoClient);
+    SettingsController settingsController = new SettingsController(settingsRepository);
 
-    Order order = new Order(LocalDate.now(), LocalDate.now(), "", destinationAddress,
+    String sourceAddress = "";
+    if (settingsController.getAll().isEmpty()) {
+      sourceAddress = "";
+    }
+    sourceAddress = settingsController.getAll().get(0).getSourceAddress();
+
+    Order order = new Order(LocalDate.now(), LocalDate.now(), sourceAddress, destinationAddress,
         Status.WAREHOUSE_EXIT, addresseeName, remitterName, Integer.parseInt(price), isCashOn,
         descriptionAddress, "", new Responsible(responsible, "", "", ""));
     orderController.add(order);
@@ -140,7 +150,7 @@ public class OrderView extends HttpServlet {
 
       Status status = Status.fromString(state);
       orderController.editStatus(id, status);
-      
+
       resp.sendRedirect("/project-programation/orders");
     } else {
 

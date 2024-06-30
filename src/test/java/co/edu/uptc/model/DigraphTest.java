@@ -38,7 +38,6 @@ public class DigraphTest {
     Node node4 = new Node(4, new Properties(4, 5.7142417, -72.9368016, 4, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-
     nodes.add(node);
     nodes.add(node2);
     nodes.add(node3);
@@ -74,14 +73,10 @@ public class DigraphTest {
 
     Edge edge4 = new Edge(13, propertiesEdge4, geometry);
 
-
     edges.add(edge);
     edges.add(edge2);
     edges.add(edge3);
     edges.add(edge4);
-
-
-
   }
 
   @Test
@@ -122,8 +117,6 @@ public class DigraphTest {
 
     assertTrue(edgeFound);
     assertFalse(edgeFound2);
-
-    // System.out.println(digraph.toString());
 
   }
 }

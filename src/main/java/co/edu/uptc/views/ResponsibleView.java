@@ -97,7 +97,7 @@ public class ResponsibleView extends HttpServlet {
       ServletUtils.forward(req, resp, "/pages/addresponsible.jsp");
       return;
     }
-    if (!name.matches("[a-zA-Z]+")) {
+    if (!name.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")) {
       req.setAttribute("errorMessageName", "Error: solo se aceptan letras");
       ServletUtils.forward(req, resp, "/pages/addresponsible.jsp");
       return;
@@ -148,7 +148,7 @@ public class ResponsibleView extends HttpServlet {
       ServletUtils.forward(req, resp, "/pages/editresponsible.jsp");
       return;
     }
-    if (!name.matches("[a-zA-Z]+")) {
+    if (!name.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")) {
       req.setAttribute("errorMessageName", "Error: opcion invalida");
       ServletUtils.forward(req, resp, "/pages/editresponsible.jsp");
       return;

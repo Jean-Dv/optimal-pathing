@@ -18,14 +18,13 @@
   <main class="ml-60 max-h-screen p-8 mt-20 sm:overflow-auto sm:ml-16">
     <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 gap-x-16 gap-y-8 lg:grid-cols-5">
-        <div class="lg:col-span-2 lg:py-12">
-          <h3 class="text-4xl text-black">Uuid Orden</h3>
-        </div>
-
         <% Order order = (Order) request.getSession().getAttribute("order"); %>
+        <div class="lg:col-span-2 lg:py-12">
+          <h3 class="text-4xl text-black">Orden: <%= order.getId() %></h3>
+        </div>
         <div class="rounded-lg bg-white p-8 shadow-lg lg:col-span-3 lg:p-12">
           <form action="/project-programation/order" method="post" class="space-y-4">
-            <input type="hidden" id="_method" name="_method" value="put" />
+            <input type="hidden" id="_method" name="_method" value="patch" />
             <input type="hidden" id="id" name="id" value="<%= order.getId() %>" />
             <div>
               <label
@@ -83,7 +82,7 @@
                         name="descriptionAddress"
                         class="border-none bg-gray-200 text-gray-700 p-2 w-full cursor-not-allowed"
                         placeholder="Descripción de dirección"
-                        value="${order.destinationAddress}"
+                        value="${order.description}"
                         readonly
                       />
 
@@ -200,9 +199,6 @@
                               <option value="Warehouse exit"
                                 <%= order.getStatus().getStatus().equals("Warehouse exit") ? "selected" : "" %>
                               >Warehouse Exit</option>
-
-                                 
-
                           </select>
                         </div>
                       </div>

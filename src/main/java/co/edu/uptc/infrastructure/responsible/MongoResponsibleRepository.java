@@ -1,8 +1,6 @@
 package co.edu.uptc.infrastructure.responsible;
 
-
 import co.edu.uptc.infrastructure.MongoRepository;
-import co.edu.uptc.model.Order;
 import co.edu.uptc.model.Responsible;
 import co.edu.uptc.model.ResponsibleRepository;
 import com.mongodb.client.FindIterable;

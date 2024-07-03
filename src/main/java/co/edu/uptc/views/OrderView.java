@@ -10,6 +10,7 @@ import co.edu.uptc.model.OrderRepository;
 import co.edu.uptc.model.Responsible;
 import co.edu.uptc.model.SettingsRepository;
 import co.edu.uptc.model.Status;
+import co.edu.uptc.model.SupportsPatch;
 import co.edu.uptc.utils.ServletUtils;
 import co.edu.uptc.utils.StringUtils;
 import com.mongodb.client.MongoClient;
@@ -27,9 +28,20 @@ import org.apache.logging.log4j.Logger;
  * Class that represents the view for the order.
  */
 @WebServlet("/order")
-public class OrderView extends HttpServlet {
+public class OrderView extends HttpServlet implements SupportsPatch {
+  private static final String METHOD_PATCH = "PATCH";
   private static final Logger logger = LogManager.getLogger(OrderView.class);
 
+  @Override
+  protected void service(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    String method = req.getMethod();
+    if (!method.equals(METHOD_PATCH)) {
+      super.service(req, resp);
+      return;
+    }
+    this.doPatch(req, resp);
+  }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -40,6 +52,12 @@ public class OrderView extends HttpServlet {
       this.doPut(req, resp);
       return;
     }
+
+    if (method != null && method.equals("patch")) {
+      this.doPatch(req, resp);
+      return;
+    }
+
     String cashonDelivery = req.getParameter("isCashOn"); // on para si, y null para no
     String destinationAddress = req.getParameter("destinationAddress");
     String descriptionAddress = req.getParameter("descriptionAddress");
@@ -111,6 +129,7 @@ public class OrderView extends HttpServlet {
       Order order = orderController.getById(id);
       req.getSession().setAttribute("order", order);
       ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
     }
 
     if (action != null && action.equals("editstate") && id != null) {
@@ -122,6 +141,7 @@ public class OrderView extends HttpServlet {
       Order order = orderController.getById(id);
       req.getSession().setAttribute("order", order);
       ServletUtils.forward(req, resp, "/pages/editstate.jsp");
+      return;
     }
 
     ServletUtils.forward(req, resp, "/pages/addorder.jsp");
@@ -132,74 +152,51 @@ public class OrderView extends HttpServlet {
   protected void doPut(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
-    String pathInfo = req.getPathInfo();
+    final String isCashon = req.getParameter("cashonDelivery");
+    String id = req.getParameter("id");
+    String destinationAddress = req.getParameter("destinationAddress");
+    String descriptionAddress = req.getParameter("descriptionAddress");
+    String remitterName = req.getParameter("remitterName");
+    String addresseeName = req.getParameter("addresseeName");
+    String price = req.getParameter("price");
+    String state = req.getParameter("state");
 
-    if (pathInfo != null && pathInfo.equals("/editstate")) {
-      String state = req.getParameter("state");
-      String id = req.getParameter("id");
+    if (descriptionAddress == null || destinationAddress == null || remitterName == null
+        || addresseeName == null || price == null || descriptionAddress.isEmpty()
+        || destinationAddress.isEmpty() || remitterName.isEmpty() || addresseeName.isEmpty()
+        || price.isEmpty() || state == null || state.isEmpty()) {
 
-      if (state == null || state.isEmpty()) {
-        ServletUtils.forward(req, resp, "/pages/orders.jsp");
-        return;
-      }
-
-      MongoClient mongoClient =
-          MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
-      OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
-      OrderController orderController = new OrderController(orderRepository);
-
-      Status status = Status.fromString(state);
-      orderController.editStatus(id, status);
-
-      resp.sendRedirect("/project-programation/orders");
-    } else {
-
-      final String isCashon = req.getParameter("cashonDelivery");
-      String id = req.getParameter("id");
-      String destinationAddress = req.getParameter("destinationAddress");
-      String descriptionAddress = req.getParameter("descriptionAddress");
-      String remitterName = req.getParameter("remitterName");
-      String addresseeName = req.getParameter("addresseeName");
-      String price = req.getParameter("price");
-      String state = req.getParameter("state");
-
-      if (descriptionAddress == null || destinationAddress == null || remitterName == null
-          || addresseeName == null || price == null || descriptionAddress.isEmpty()
-          || destinationAddress.isEmpty() || remitterName.isEmpty() || addresseeName.isEmpty()
-          || price.isEmpty() || state == null || state.isEmpty()) {
-
-        req.setAttribute("id", id);
-        req.setAttribute("action", "edit");
-        req.setAttribute("all_fields_required", "Error: All fields are required");
-        ServletUtils.forward(req, resp, "/pages/editorder.jsp");
-        return;
-      }
-
-      if (!remitterName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")
-          || !addresseeName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")) {
-        req.setAttribute("only_letters_are_accepted", "only letters");
-        ServletUtils.forward(req, resp, "/pages/editorder.jsp");
-        return;
-      }
-
-      MongoClient mongoClient =
-          MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
-      OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
-      OrderController orderController = new OrderController(orderRepository);
-
-      Order order = orderController.getById(id);
-
-      order.setDestinationAddress(destinationAddress);
-      order.setDescription(descriptionAddress);
-      order.setRemitterName(remitterName);
-      order.setAddresseeName(addresseeName);
-      order.setCashonDelivery(isCashon != null);
-      order.setShippingValue(Integer.parseInt(price));
-      order.setStatus(Status.fromString(state));
-      orderController.edit(order);
-
-      resp.sendRedirect("/project-programation/orders");
+      req.setAttribute("id", id);
+      req.setAttribute("action", "edit");
+      req.setAttribute("all_fields_required", "Error: All fields are required");
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
     }
+
+    if (!remitterName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")
+        || !addresseeName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")) {
+      req.setAttribute("only_letters_are_accepted", "only letters");
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
+    }
+
+    MongoClient mongoClient =
+        MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
+    OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
+    OrderController orderController = new OrderController(orderRepository);
+
+    Order order = orderController.getById(id);
+
+    order.setDestinationAddress(destinationAddress);
+    order.setDescription(descriptionAddress);
+    order.setRemitterName(remitterName);
+    order.setAddresseeName(addresseeName);
+    order.setCashonDelivery(isCashon != null);
+    order.setShippingValue(Integer.parseInt(price));
+    order.setStatus(Status.fromString(state));
+    orderController.edit(order);
+
+    resp.sendRedirect("/project-programation/orders");
   }
 
   @Override
@@ -224,5 +221,27 @@ public class OrderView extends HttpServlet {
     } catch (Exception error) {
       OrderView.logger.error(error);
     }
+  }
+
+  @Override
+  public void doPatch(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    String id = req.getParameter("id");
+    String state = req.getParameter("state");
+
+    if (state == null || state.isEmpty() || id == null || id.isEmpty()) {
+      ServletUtils.forward(req, resp, "/pages/orders.jsp");
+      return;
+    }
+
+    MongoClient mongoClient =
+        MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
+    OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
+    OrderController orderController = new OrderController(orderRepository);
+
+    Status status = Status.fromString(state);
+    orderController.editStatus(id, status);
+
+    resp.sendRedirect("/project-programation/orders");
   }
 }

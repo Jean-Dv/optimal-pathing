@@ -3,7 +3,7 @@
 <%@ page import="co.edu.uptc.model.Order" %>
 <html lang="en">
 <head>
-    <title>Home</title>
+    <title>Inicio</title>
     <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <%@ include file="../common/import-js.jsp" %>
@@ -12,7 +12,7 @@
   <jsp:include page="../components/navbar.jsp">
     <jsp:param name="section" value="Ordenes" />
     <jsp:param name="hrefSection" value="orders" />
-    <jsp:param name="title" value="Home" />
+    <jsp:param name="title" value="Inicio" />
     <jsp:param name="hrefTitle" value="orders" />
   </jsp:include>
   <%@ include file="../components/sidemenu.jsp" %>
@@ -86,7 +86,7 @@
                 <span class="inline-flex overflow-hidden rounded-md border bg-white shadow-sm">
                  <button
                         class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
-                        title="Edit order"
+                        title="Editar estado de la orden"
                           onclick="window.location.href='/project-programation/order?id=<%= order.getId() %>&action=editstate'">
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
@@ -105,7 +105,7 @@
                   </button>
                   <button
                     class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
-                    title="Edit order"
+                    title="Editar orden"
                       onclick="window.location.href='/project-programation/order?id=<%= order.getId() %>&action=edit'">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@
                   </button>
                   <button
                     class="inline-block border-e p-3 text-gray-700 hover:bg-gray-50 focus:relative"
-                    title="Delete order"
+                    title="Eliminar orden"
                     onclick="<%="showAlert('" + order.getId() + "')"%>"
                     >
                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -166,9 +166,9 @@
               fill="currentColor" />
           </svg>
 
-          <h1 class="text-center"> Are you sure?</h1>
+          <h1 class="text-center"> ¿Estás segur@?</h1>
           <p class="mt-4 text-gray-500 text-center">
-            You won't be able to revert this!
+            ¡No podrás revertir esto!
           </p>
 
           <div class="mt-6 sm:flex sm:gap-4 justify-center">
@@ -177,8 +177,7 @@
               class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
               onclick="deleteOrder()"
             >
-              Yes, delete it!
-
+              ¡Sí, bórralo!
             </button>
             </div>
             <div class="mt-6">
@@ -186,7 +185,7 @@
               class="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
               onclick="hideWarning()"
             >
-              Cancel
+              Cancelar
             </button>
             </div>
           </div>

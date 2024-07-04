@@ -1,13 +1,16 @@
 package co.edu.uptc.views;
 
 import co.edu.uptc.controller.orders.OrderController;
+import co.edu.uptc.controller.responsible.ResponsibleController;
 import co.edu.uptc.controller.settings.SettingsController;
 import co.edu.uptc.infrastructure.MongoClientFactory;
 import co.edu.uptc.infrastructure.orders.MongoOrderRepository;
+import co.edu.uptc.infrastructure.responsible.MongoResponsibleRepository;
 import co.edu.uptc.infrastructure.settings.MongoSettingsRepository;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
 import co.edu.uptc.model.Responsible;
+import co.edu.uptc.model.ResponsibleRepository;
 import co.edu.uptc.model.SettingsRepository;
 import co.edu.uptc.model.Status;
 import co.edu.uptc.model.SupportsPatch;
@@ -16,6 +19,7 @@ import co.edu.uptc.utils.StringUtils;
 import com.mongodb.client.MongoClient;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -64,15 +68,15 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     String remitterName = req.getParameter("remitterName");
     String addresseeName = req.getParameter("addresseeName");
     String price = req.getParameter("price");
-    String responsible = req.getParameter("responsible");
+    String responsibleId = req.getParameter("responsible");
     boolean isCashOn = false;
 
     if (descriptionAddress == null || destinationAddress == null || remitterName == null
-        || addresseeName == null || price == null || responsible == null
+        || addresseeName == null || price == null || responsibleId == null
         || descriptionAddress.isEmpty() || destinationAddress.isEmpty() || price.isEmpty()
-        || responsible.isEmpty() || remitterName.isEmpty() || addresseeName.isEmpty()) {
+        || responsibleId.isEmpty() || remitterName.isEmpty() || addresseeName.isEmpty()) {
 
-      req.setAttribute("errorMessage", "Error: All fields are required");
+      req.setAttribute("errorMessage", "Error: todos los campos son obligatorios");
       ServletUtils.forward(req, resp, "/pages/addorder.jsp");
       return;
     }
@@ -85,7 +89,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
 
     if (!remitterName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")
         || !addresseeName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")) {
-      req.setAttribute("errorMessageString", "only letters");
+      req.setAttribute("errorMessageString", "Error: solo se aceptan letras");
       ServletUtils.forward(req, resp, "/pages/addorder.jsp");
       return;
     }
@@ -93,7 +97,6 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     MongoClient mongoClient =
         MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
     OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
-    OrderController orderController = new OrderController(orderRepository);
 
     SettingsRepository settingsRepository = new MongoSettingsRepository(mongoClient);
     SettingsController settingsController = new SettingsController(settingsRepository);
@@ -102,11 +105,19 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     if (settingsController.getAll().isEmpty()) {
       sourceAddress = "";
     }
+    OrderController orderController = new OrderController(orderRepository);
     sourceAddress = settingsController.getAll().get(0).getSourceAddress();
 
+    MongoClient mongoClientResponsible =
+        MongoClientFactory.createClient("responsibleView", "mongodb://localhost:27017");
+    ResponsibleRepository responsibleRepository =
+        new MongoResponsibleRepository(mongoClientResponsible);
+    ResponsibleController responsibleController = new ResponsibleController(responsibleRepository);
+
+    Responsible responsible = responsibleController.getById(responsibleId);
     Order order = new Order(LocalDate.now(), LocalDate.now(), sourceAddress, destinationAddress,
         Status.WAREHOUSE_EXIT, addresseeName, remitterName, Integer.parseInt(price), isCashOn,
-        descriptionAddress, "", new Responsible(responsible, "", "", ""));
+        descriptionAddress, "", responsible);
     orderController.add(order);
     resp.sendRedirect("/project-programation/orders");
     return;
@@ -143,7 +154,13 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       ServletUtils.forward(req, resp, "/pages/editstate.jsp");
       return;
     }
+    MongoClient mongoClient =
+        MongoClientFactory.createClient("responsibleView", "mongodb://localhost:27017");
+    ResponsibleRepository responsibleRepository = new MongoResponsibleRepository(mongoClient);
+    ResponsibleController responsibleController = new ResponsibleController(responsibleRepository);
+    List<Responsible> responsibles = responsibleController.getAll();
 
+    req.getSession().setAttribute("responsibles", responsibles);
     ServletUtils.forward(req, resp, "/pages/addorder.jsp");
 
   }
@@ -160,25 +177,34 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     String addresseeName = req.getParameter("addresseeName");
     String price = req.getParameter("price");
     String state = req.getParameter("state");
+    String responsibleId = req.getParameter("responsible");
 
     if (descriptionAddress == null || destinationAddress == null || remitterName == null
         || addresseeName == null || price == null || descriptionAddress.isEmpty()
         || destinationAddress.isEmpty() || remitterName.isEmpty() || addresseeName.isEmpty()
-        || price.isEmpty() || state == null || state.isEmpty()) {
+        || price.isEmpty() || state == null || state.isEmpty() || responsibleId == null
+        || responsibleId.isEmpty()) {
 
       req.setAttribute("id", id);
       req.setAttribute("action", "edit");
-      req.setAttribute("all_fields_required", "Error: All fields are required");
+      req.setAttribute("all_fields_required", "Error: todos los campos son obligatorios");
       ServletUtils.forward(req, resp, "/pages/editorder.jsp");
       return;
     }
 
     if (!remitterName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")
         || !addresseeName.matches("^[A-Za-zÁÉÍÓÚáéíóúñÑ ]+$")) {
-      req.setAttribute("only_letters_are_accepted", "only letters");
+      req.setAttribute("only_letters_are_accepted", "Error: solo se aceptan letras");
       ServletUtils.forward(req, resp, "/pages/editorder.jsp");
       return;
     }
+
+    MongoClient mongoClientResponsible =
+        MongoClientFactory.createClient("responsibleView", "mongodb://localhost:27017");
+    ResponsibleRepository responsibleRepository =
+        new MongoResponsibleRepository(mongoClientResponsible);
+    ResponsibleController responsibleController = new ResponsibleController(responsibleRepository);
+    final Responsible responsible = responsibleController.getById(responsibleId);
 
     MongoClient mongoClient =
         MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
@@ -194,6 +220,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     order.setCashonDelivery(isCashon != null);
     order.setShippingValue(Integer.parseInt(price));
     order.setStatus(Status.fromString(state));
+    order.setResponsible(responsible);
     orderController.edit(order);
 
     resp.sendRedirect("/project-programation/orders");

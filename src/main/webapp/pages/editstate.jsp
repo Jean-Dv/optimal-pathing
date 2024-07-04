@@ -52,9 +52,11 @@
               <div class="flex-auto">
                 <label
                     for="destinationAddress"
-                    class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
-                  >
-                    <input
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                >
+                    Destination Address
+                </label>
+                 <input
                       type="text"
                       id="destinationAddress"
                       name="destinationAddress"
@@ -63,20 +65,15 @@
                       value="${order.destinationAddress}"
                       readonly
                     />
-
-                    <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
-                    >
-                      Destination Address
-                    </span>
-                  </label>
               </div>
               <div class="flex-auto">
                 <label
                     for="descriptionAddress"
-                    class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
-                  >
-                   <input
+                    class="block text-sm font-medium text-gray-700 mb-1"              
+                >
+                      Description Address
+                  </label>
+                  <input
                         type="text"
                         id="descriptionAddress"
                         name="descriptionAddress"
@@ -85,22 +82,17 @@
                         value="${order.description}"
                         readonly
                       />
-
-                    <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
-                    >
-                      Description Address
-                    </span>
-                  </label>
               </div>
             </div>
             <div class="flex flex-row gap-x-16 sm:flex-col sm:gap-y-4">
               <div class="flex-auto">
                 <label
                     for="remitterName"
-                    class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+                    class="block text-sm font-medium text-gray-700 mb-1"              
                   >
-                    <input
+                      Remitter Name
+                </label>
+                <input
                       type="text"
                       id="remitterName"
                       name="remitterName"
@@ -109,20 +101,15 @@
                       value="${order.remitterName}"
                       readonly
                     />
-
-                    <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
-                    >
-                      Remitter Name
-                    </span>
-                  </label>
               </div>
               <div class="flex-auto">
                 <label
                     for="addresseeName"
-                    class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600"
+                    class="block text-sm font-medium text-gray-700 mb-1"              
                   >
-                    <input
+                      Addressee Name
+                </label>
+                <input
                       type="text"
                       id="addresseeName"
                       name="addresseeName"
@@ -131,21 +118,18 @@
                       value="${order.addresseeName}"
                       readonly
                     />
-
-                    <span
-                      class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs"
-                    >
-                      Addressee Name
-                    </span>
-                  </label>
               </div>
 
             </div>
                  <div class="flex flex-row gap-x-16 sm:flex-col sm:gap-y-4">
                     <div class="flex-auto w-full">
-                      <label for="price"
-                            class="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
-                        <input type="number"
+                      <label 
+                         for="price"
+                         class="block text-sm font-medium text-gray-700 mb-1"              
+                      >
+                          Price
+                      </label>
+                      <input type="number"
                               id="price"
                               name="price"
                               class="border-none bg-gray-200 text-gray-700 p-2 w-full cursor-not-allowed"
@@ -153,52 +137,52 @@
                               value="${order.shippingValue}"
                               readonly
                         />
-
-                        <span class="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-gray-150 p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                          Price
-                        </span>
-                      </label>
                     </div>
 
                     <div class="flex-auto w-full sm:ml-4">
                       <div class="flex gap-4">
-                       <div class="w-full sm:w-1/2">
-                        <select name="responsible"
-                                id="responsible"
-                               class="border bg-gray-300 text-gray-700 p-2 w-full cursor-not-allowed rounded-md"
-                                disabled>
-                          <option value="">Responsable</option>
-                          <option value="JM" <%= order.getResponsible().equals("JM") ? "selected" : "" %>>John Mayer</option>
-                          <option value="SRV" <%= order.getResponsible().getName().equals("SRV") ? "selected" : "" %>>Stevie Ray Vaughn</option>
-                          <option value="JH" <%= order.getResponsible().getName().equals("JH") ? "selected" : "" %>>Jimi Hendrix</option>
-                          <option value="BBK" <%= order.getResponsible().getName().equals("BBK") ? "selected" : "" %>>B.B King</option>
-                          <option value="AK" <%= order.getResponsible().getName().equals("AK") ? "selected" : "" %>>Albert King</option>
-                          <option value="BG" <%= order.getResponsible().getName().equals("BG") ? "selected" : "" %>>Buddy Guy</option>
-                          <option value="EC" <%= order.getResponsible().getName().equals("EC") ? "selected" : "" %>>Eric Clapton</option>
-                        </select>
-                      </div>
-
-                      <div class="w-full sm:w-1/2">
-                          <select name="state"
-                                  id="state"
-                                  class="block border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent border-gray-300 p-2"
+                        <div class="w-full sm:w-1/2">
+                          <label 
+                            for="responsible"
+                            class="block text-sm font-medium text-gray-700 mb-1"
                           >
-                              <option value="">State</option>
-                              <option value="Delivered"
-                                <%= order.getStatus().getStatus().equals("Delivered") ? "selected" : "" %>
-                              >Delivered</option>
-                              <option value="Delay"
-                                <%= order.getStatus().getStatus().equals("Delay") ? "selected" : "" %>
-                              >Delay</option>
-                              <option value="Devolution"
-                                <%= order.getStatus().getStatus().equals("Devolution") ? "selected" : "" %>
-                              >Devolution</option>
-                              <option value="On way"
-                                <%= order.getStatus().getStatus().equals("On way") ? "selected" : "" %>
-                              >On Way</option>
-                              <option value="Warehouse exit"
-                                <%= order.getStatus().getStatus().equals("Warehouse exit") ? "selected" : "" %>
-                              >Warehouse Exit</option>
+                            Responsable
+                          </label>
+                          <select 
+                            name="responsible"
+                            id="responsible"
+                            class="border bg-gray-300 text-gray-700 p-2 w-full cursor-not-allowed rounded-md"
+                            disabled
+                          >
+                            <option value="">Please Select</option>
+                            <option value="JM" <%= order.getResponsible().equals("JM") ? "selected" : "" %>>John Mayer</option>
+                            <option value="SRV" <%= order.getResponsible().getName().equals("SRV") ? "selected" : "" %>>Stevie Ray Vaughn</option>
+                            <option value="JH" <%= order.getResponsible().getName().equals("JH") ? "selected" : "" %>>Jimi Hendrix</option>
+                            <option value="BBK" <%= order.getResponsible().getName().equals("BBK") ? "selected" : "" %>>B.B King</option>
+                            <option value="AK" <%= order.getResponsible().getName().equals("AK") ? "selected" : "" %>>Albert King</option>
+                            <option value="BG" <%= order.getResponsible().getName().equals("BG") ? "selected" : "" %>>Buddy Guy</option>
+                            <option value="EC" <%= order.getResponsible().getName().equals("EC") ? "selected" : "" %>>Eric Clapton</option>
+                          </select>
+                        </div>
+
+                        <div class="w-full sm:w-1/2">
+                          <label 
+                            for="state"
+                            class="block text-sm font-medium text-gray-700 mb-1"
+                          >
+                            State
+                          </label>
+                          <select 
+                            name="state"
+                            id="state"
+                            class="border border-gray-200 shadow-sm w-full focus-within:border-blue-600 focus-within:ring-1 rounded-md bg-transparent border-gray-300 p-2"
+                          >
+                            <option value="">Please Select</option>
+                            <option value="Delivered" <%= order.getStatus().getStatus().equals("Delivered") ? "selected" : "" %>>Delivered</option>
+                            <option value="Delay" <%= order.getStatus().getStatus().equals("Delay") ? "selected" : "" %>>Delay</option>
+                            <option value="Devolution" <%= order.getStatus().getStatus().equals("Devolution") ? "selected" : "" %>>Devolution</option>
+                            <option value="On way" <%= order.getStatus().getStatus().equals("On way") ? "selected" : "" %>>On Way</option>
+                            <option value="Warehouse exit" <%= order.getStatus().getStatus().equals("Warehouse exit") ? "selected" : "" %>>Warehouse Exit</option>
                           </select>
                         </div>
                       </div>

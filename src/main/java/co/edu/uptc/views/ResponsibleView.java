@@ -103,7 +103,7 @@ public class ResponsibleView extends HttpServlet {
       return;
     }
 
-    if (!email.contains("@")) {
+    if (!email.matches("^(.+)@(.+)$")) {
       req.setAttribute("errorMessageEmail", "Email invalido");
       ServletUtils.forward(req, resp, "/pages/addresponsible.jsp");
       return;
@@ -154,7 +154,7 @@ public class ResponsibleView extends HttpServlet {
       return;
     }
 
-    if (!email.contains("@")) {
+    if (!email.matches("^(.+)@(.+)$")) {
       req.setAttribute("errorMessageEmail", "Email invalido");
       ServletUtils.forward(req, resp, "/pages/editresponsible.jsp");
       return;

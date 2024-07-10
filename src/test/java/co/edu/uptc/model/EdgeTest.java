@@ -289,7 +289,6 @@ public class EdgeTest {
       }
             """;
 
-
   @Test
   public void testFromDocument() {
     Edge edge = Edge.fromDocument(Document.parse(this.geoJson));

@@ -56,7 +56,7 @@ public class Digraph {
    */
   public void addEdge(Edge edge) {
     Node startNode = findNode(edge.getProperties().getStartNode());
-    Node endNode = findNode((int) edge.getProperties().getEndNode());
+    Node endNode = findNode(edge.getProperties().getEndNode());
 
     if (startNode == null || endNode == null) {
       throw new IllegalArgumentException("One or both nodes not found in the graph");
@@ -72,9 +72,9 @@ public class Digraph {
    * @param id the identifier of the node to find
    * @return the node if found, otherwise null
    */
-  public Node findNode(int id) {
+  public Node findNode(Double id) {
     for (Node node : nodes) {
-      if (node.getProperties().getOsmid() == id) {
+      if (node.getProperties().getOsmid().equals(id)) {
         return node;
       }
     }
@@ -94,7 +94,7 @@ public class Digraph {
       List<Edge> edges = adjacencyList.get(node);
       if (edges != null) {
         for (Edge edge : edges) {
-          Node endNode = findNode((int) edge.getProperties().getEndNode());
+          Node endNode = findNode(edge.getProperties().getEndNode());
           s.append(endNode.getIdentifier()).append(" ");
         }
       }

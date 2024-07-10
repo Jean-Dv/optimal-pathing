@@ -26,16 +26,16 @@ public class DigraphTest {
   @Before
   public void setUp() {
 
-    Node node = new Node(1.0, new Properties(1.0, 5.7142417, -72.9368016, 4.0, null),
+    Node node = new Node(1.0, new PropertiesNode(1.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-    Node node2 = new Node(2.0, new Properties(2.0, 5.7142417, -72.9368016, 4.0, null),
+    Node node2 = new Node(2.0, new PropertiesNode(2.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-    Node node3 = new Node(3.0, new Properties(3.0, 5.7142417, -72.9368016, 4.0, null),
+    Node node3 = new Node(3.0, new PropertiesNode(3.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-    Node node4 = new Node(4.0, new Properties(4.0, 5.7142417, -72.9368016, 4.0, null),
+    Node node4 = new Node(4.0, new PropertiesNode(4.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
     nodes.add(node);
@@ -82,10 +82,10 @@ public class DigraphTest {
   @Test
   public void addNode() {
 
-    Node node = new Node(1.0, new Properties(316951892.0, 5.7142417, -72.9368016, 4.0, null),
+    Node node = new Node(1.0, new PropertiesNode(316951892.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-    Node node2 = new Node(1.0, new Properties(316951892.0, 5.7142417, -72.9368016, 4.0, null),
+    Node node2 = new Node(1.0, new PropertiesNode(316951892.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
     Digraph digraph = new Digraph();

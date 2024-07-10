@@ -7,7 +7,6 @@ import com.mongodb.client.model.geojson.Position;
 import org.bson.Document;
 import org.junit.Test;
 
-
 /**
  * This class represents a node in the digraph.
  */

@@ -17,17 +17,17 @@ public class EdgeTest {
   private String geoJson = """
       {
         "type": "Feature",
-        "id": 0,
+        "id": 0.0,
         "properties": {
-          "u": 316951892,
-          "v": 5613812079,
-          "key": 0,
+          "u": 316951892.0,
+          "v": 5613812079.0,
+          "key": 0.0,
           "osmid": [
-            585952937,
-            585952939,
-            585952940,
-            1067403003,
-            587726557
+            585952937.0,
+            585952939.0,
+            585952940.0,
+            1067403003.0,
+            587726557.0
           ],
           "highway": "unclassified",
           "oneway": false,
@@ -36,7 +36,7 @@ public class EdgeTest {
             true
           ],
           "length": 872.179,
-          "maxspeed": 30,
+          "maxspeed": 30.0,
           "weight": 29.072633333333336,
           "lanes": null,
           "ref": null,
@@ -302,7 +302,7 @@ public class EdgeTest {
   @Test
   public void testToDocument() {
 
-    PropertiesEdge propertiesEdge = new PropertiesEdge(316951892, 131231231, 0, null, geoJson,
+    PropertiesEdge propertiesEdge = new PropertiesEdge(316951892.0, 131231231.0, 0, null, null,
         false, null, 0, 0, 0, null, null, null, null, null);
 
     Position position1 = new Position(-72.9289882, 5.6652957);
@@ -315,9 +315,9 @@ public class EdgeTest {
     positions.add(position1);
     LineString geometry = new LineString(positions);
 
-    Edge edge = new Edge(12, propertiesEdge, geometry);
+    Edge edge = new Edge(12.0, propertiesEdge, geometry);
 
-    assertEquals(12, edge.toDocument().get("id"));
+    assertEquals(12.0, edge.toDocument().get("id"));
   }
 
 }

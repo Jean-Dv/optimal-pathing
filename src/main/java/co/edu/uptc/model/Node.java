@@ -10,7 +10,7 @@ import org.bson.Document;
  */
 public class Node extends AggregateRoot {
   private FeatureType type = FeatureType.FEATURE;
-  private int identifier;
+  private Double identifier;
   private Properties properties;
   private Point geometry;
 
@@ -21,7 +21,7 @@ public class Node extends AggregateRoot {
    * @param properties The properties of the node.
    * @param geometry The geometry of the node.
    */
-  public Node(int identifier, Properties properties, Point geometry) {
+  public Node(Double identifier, Properties properties, Point geometry) {
     this.identifier = identifier;
     this.properties = properties;
     this.geometry = geometry;
@@ -35,11 +35,11 @@ public class Node extends AggregateRoot {
     this.type = type;
   }
 
-  public int getIdentifier() {
+  public Double getIdentifier() {
     return identifier;
   }
 
-  public void setIdentifier(int identifier) {
+  public void setIdentifier(Double identifier) {
     this.identifier = identifier;
   }
 
@@ -80,7 +80,7 @@ public class Node extends AggregateRoot {
    * @return The node created from the document.
    */
   public static Node fromDocument(Document document) {
-    int identifier = document.getInteger("id");
+    Double identifier = document.getDouble("id");
     Properties properties = Properties.fromDocument((Document) document.get("properties"));
     List<Double> coordinates =
         ((Document) document.get("geometry")).getList("coordinates", Double.class);

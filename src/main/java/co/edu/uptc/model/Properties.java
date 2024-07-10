@@ -6,10 +6,10 @@ import org.bson.Document;
  * This class represents the properties of a node in the graph.
  */
 public class Properties implements Documentable {
-  private int osmid;
+  private Double osmid;
   private double latitude;
   private double longitude;
-  private int streetCount;
+  private Double streetCount;
   private String highway;
 
   /**
@@ -21,7 +21,8 @@ public class Properties implements Documentable {
    * @param streetCount The number of streets that intersect in the node.
    * @param highway The type of highway that the node represents.
    */
-  public Properties(int osmid, double latitude, double longitude, int streetCount, String highway) {
+  public Properties(Double osmid, double latitude, double longitude, Double streetCount,
+      String highway) {
     this.osmid = osmid;
     this.latitude = latitude;
     this.longitude = longitude;
@@ -29,11 +30,11 @@ public class Properties implements Documentable {
     this.highway = highway;
   }
 
-  public int getOsmid() {
+  public Double getOsmid() {
     return osmid;
   }
 
-  public void setOsmid(int osmid) {
+  public void setOsmid(Double osmid) {
     this.osmid = osmid;
   }
 
@@ -53,11 +54,11 @@ public class Properties implements Documentable {
     this.longitude = longitude;
   }
 
-  public int getStreetCount() {
+  public Double getStreetCount() {
     return streetCount;
   }
 
-  public void setStreetCount(int streetCount) {
+  public void setStreetCount(Double streetCount) {
     this.streetCount = streetCount;
   }
 
@@ -87,10 +88,10 @@ public class Properties implements Documentable {
    * @return A Properties object with the data of the Document object.
    */
   public static Properties fromDocument(Document document) {
-    int osmid = document.getInteger("osmid");
+    Double osmid = document.getDouble("osmid");
     double latitude = document.getDouble("y");
     double longitude = document.getDouble("x");
-    int streetCount = document.getInteger("street_count");
+    Double streetCount = document.getDouble("street_count");
     String highway = document.getString("highway");
     return new Properties(osmid, latitude, longitude, streetCount, highway);
   }

@@ -35,7 +35,7 @@ public class NodeTest {
 
   @Test
   public void testToDocument() {
-    Node node = new Node(19.0, new Properties(1016183119.0, 5.7142417, -72.9368016, 4.0, null),
+    Node node = new Node(19.0, new PropertiesNode(1016183119.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
     Document documentExpected = Document.parse(geojson);
     assertEquals(documentExpected, node.toDocument());

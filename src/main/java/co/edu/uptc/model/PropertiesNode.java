@@ -5,7 +5,7 @@ import org.bson.Document;
 /**
  * This class represents the properties of a node in the graph.
  */
-public class Properties implements Documentable {
+public class PropertiesNode implements Documentable {
   private Double osmid;
   private double latitude;
   private double longitude;
@@ -21,7 +21,7 @@ public class Properties implements Documentable {
    * @param streetCount The number of streets that intersect in the node.
    * @param highway The type of highway that the node represents.
    */
-  public Properties(Double osmid, double latitude, double longitude, Double streetCount,
+  public PropertiesNode(Double osmid, double latitude, double longitude, Double streetCount,
       String highway) {
     this.osmid = osmid;
     this.latitude = latitude;
@@ -87,12 +87,12 @@ public class Properties implements Documentable {
    * @param document The Document object to convert.
    * @return A Properties object with the data of the Document object.
    */
-  public static Properties fromDocument(Document document) {
+  public static PropertiesNode fromDocument(Document document) {
     Double osmid = document.getDouble("osmid");
     double latitude = document.getDouble("y");
     double longitude = document.getDouble("x");
     Double streetCount = document.getDouble("street_count");
     String highway = document.getString("highway");
-    return new Properties(osmid, latitude, longitude, streetCount, highway);
+    return new PropertiesNode(osmid, latitude, longitude, streetCount, highway);
   }
 }

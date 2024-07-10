@@ -81,7 +81,6 @@ public class DigraphTest {
 
   @Test
   public void addNode() {
-
     Node node = new Node(1.0, new PropertiesNode(316951892.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 

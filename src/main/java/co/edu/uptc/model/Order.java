@@ -1,6 +1,7 @@
 package co.edu.uptc.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import org.bson.Document;
 
@@ -20,6 +21,7 @@ public class Order extends AggregateRoot {
   private String description;
   private String observation;
   private Responsible responsible;
+  private List<Path> optimalRoutes;
 
   public Order() {}
 
@@ -39,11 +41,13 @@ public class Order extends AggregateRoot {
    * @param description A brief description of the package.
    * @param observation Any additional observation or note related to the order.
    * @param responsible The responsible person associated with the order.
+   * @param optimalRoutes They are the optimal routes to take the package to the destination
+   *        address.
    */
   public Order(UUID id, LocalDate dateIssue, LocalDate deadline, String sourceAddress,
       String destinationAddress, Status status, String addresseeName, String remitterName,
       int shippingValue, boolean cashonDelivery, String description, String observation,
-      Responsible responsible) {
+      Responsible responsible, List<Path> optimalRoutes) {
     super(id);
     this.dateIssue = dateIssue;
     this.deadline = deadline;
@@ -57,6 +61,7 @@ public class Order extends AggregateRoot {
     this.description = description;
     this.observation = observation;
     this.responsible = responsible;
+    this.optimalRoutes = optimalRoutes;
   }
 
   /**
@@ -190,6 +195,14 @@ public class Order extends AggregateRoot {
     this.responsible = responsible;
   }
 
+  public List<Path> getOptimalRoutes() {
+    return optimalRoutes;
+  }
+
+  public void setOptimalRoutes(List<Path> optimalRoutes) {
+    this.optimalRoutes = optimalRoutes;
+  }
+
   @Override
   public String toString() {
     return "Order [id=" + id + ", dateIssue=" + dateIssue + ", deadline=" + deadline
@@ -216,6 +229,7 @@ public class Order extends AggregateRoot {
     document.append("description", this.description);
     document.append("observation", this.observation);
     document.append("responsible", this.responsible.toDocument());
+    document.append("optimalRoutes", this.optimalRoutes);
     return document;
   }
 
@@ -239,8 +253,10 @@ public class Order extends AggregateRoot {
     String description = document.getString("description");
     String observation = document.getString("observation");
     Responsible responsible = Responsible.fromDocument((Document) document.get("responsible"));
+    List<Path> optimalRoutes = document.getList("optimalRoutes", Path.class);
     return new Order(id, dateIssue, deadline, sourceAddress, destinationAddress, status,
         addresseeName, remitterName, shippingValue, cashonDelivery, description, observation,
-        responsible);
+        responsible, optimalRoutes);
   }
+
 }

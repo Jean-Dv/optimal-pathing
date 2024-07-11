@@ -101,7 +101,11 @@ public class AlgorithmStar {
     }
 
     fastestPaths.sort(Comparator.comparingDouble(Path::getEstimatedCost));
+    fastestPaths.get(0).setColor("#4D5656");
 
+    for (int i = 1; i < fastestPaths.size(); i++) {
+      fastestPaths.get(i).setColor("#909497");
+    }
     return fastestPaths;
   }
 
@@ -121,4 +125,6 @@ public class AlgorithmStar {
     }
     return null;
   }
+
+
 }

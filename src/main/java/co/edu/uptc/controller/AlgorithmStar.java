@@ -65,7 +65,6 @@ public class AlgorithmStar {
    * @return A list of shortest paths from start to finish, sorted by their estimated cost.
    */
   public List<Path> findShortestPaths(Node start, Node finish, int k) {
-    // Estructuras de datos necesarias
     PriorityQueue<Path> openList =
         new PriorityQueue<>(Comparator.comparingDouble(Path::getEstimatedCost));
     Map<Node, List<Double>> scoreMap = new HashMap<>();
@@ -145,3 +144,4 @@ public class AlgorithmStar {
 
 
 }
+

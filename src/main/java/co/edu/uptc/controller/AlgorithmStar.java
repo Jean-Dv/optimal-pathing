@@ -119,6 +119,11 @@ public class AlgorithmStar {
       }
     }
     allPaths.sort(Comparator.comparingDouble(Path::getEstimatedCost));
+    allPaths.get(0).setColor("#4D5656");
+
+    for (int i = 1; i < allPaths.size(); i++) {
+      allPaths.get(i).setColor("#909497");
+    }
     return allPaths;
   }
 
@@ -137,4 +142,4 @@ public class AlgorithmStar {
   public List<Node> getNodes() {
     return nodes;
   }
-}
+

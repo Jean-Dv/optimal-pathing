@@ -9,9 +9,11 @@ import static org.junit.Assert.fail;
 import co.edu.uptc.controller.orders.OrderController;
 import co.edu.uptc.infrastructure.orders.InMemoryOrderRepository;
 import co.edu.uptc.model.Order;
+import co.edu.uptc.model.Path;
 import co.edu.uptc.model.Responsible;
 import co.edu.uptc.model.Status;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.junit.Before;
@@ -38,7 +40,8 @@ public class OrderControllerTest {
       controller.add(new Order(UUID.randomUUID(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
           "Calle 3 # 24 - 43", "Calle 4 # 25 - 9", Status.WAREHOUSE_EXIT, "Jonh Doe", "Company X",
           3000, false, "", "", new Responsible("Chic Elletson",
-              "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com")));
+              "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"),
+          new ArrayList<Path>()));
     } catch (Exception e) {
       fail("Error adding new order.");
     }
@@ -69,7 +72,8 @@ public class OrderControllerTest {
       Order orderEdit = new Order(order.getId(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
           "Calle 3 # 24 - 43", "Calle 6 # 25 - 9", Status.WAREHOUSE_EXIT, "Jonh Doe", "Company X",
           3000, false, "", "", new Responsible("Chic Elletson",
-              "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"));
+              "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"),
+          new ArrayList<Path>());
 
       assertEquals(orderEdit, controller.edit(orderEdit));
       assertEquals(orderEdit.getDestinationAddress(),
@@ -88,7 +92,8 @@ public class OrderControllerTest {
       Order order = new Order(UUID.randomUUID(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
           "Calle 3 # 24 - 43", "Calle 4 # 25 - 9", Status.WAREHOUSE_EXIT, "Jonh Doe", "Company X",
           3000, false, "", "", new Responsible("Chic Elletson",
-              "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"));
+              "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"),
+          new ArrayList<Path>());
 
       controller.add(order);
 
@@ -105,7 +110,8 @@ public class OrderControllerTest {
     Order order = new Order(UUID.randomUUID(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
         "Diagonal 2 # 1 - 45", "Calle 6 # 15 - 8", Status.WAREHOUSE_EXIT, "Jonh Doe", "Company X",
         3000, false, "", "", new Responsible("Chic Elletson",
-            "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"));
+            "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"),
+        new ArrayList<Path>());
 
     controller.add(order);
 

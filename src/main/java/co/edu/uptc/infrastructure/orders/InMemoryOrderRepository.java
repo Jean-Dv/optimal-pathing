@@ -2,7 +2,9 @@ package co.edu.uptc.infrastructure.orders;
 
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
+import com.mongodb.client.model.geojson.Point;
 import java.util.ArrayList;
+import org.bson.Document;
 
 /**
  * Class that represents the repository of orders in memory.
@@ -52,5 +54,10 @@ public class InMemoryOrderRepository implements OrderRepository {
     return this.orders.stream().filter(order -> order.getId().toString().equals(id)).findFirst()
         .orElse(null);
 
+  }
+
+  @Override
+  public Document findByPoint(Point point) {
+    return new Document();
   }
 }

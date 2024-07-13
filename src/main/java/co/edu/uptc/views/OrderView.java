@@ -7,6 +7,7 @@ import co.edu.uptc.infrastructure.MongoClientFactory;
 import co.edu.uptc.infrastructure.orders.MongoOrderRepository;
 import co.edu.uptc.infrastructure.responsible.MongoResponsibleRepository;
 import co.edu.uptc.infrastructure.settings.MongoSettingsRepository;
+import co.edu.uptc.model.Node;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
 import co.edu.uptc.model.Responsible;
@@ -16,7 +17,13 @@ import co.edu.uptc.model.Status;
 import co.edu.uptc.model.SupportsPatch;
 import co.edu.uptc.utils.ServletUtils;
 import co.edu.uptc.utils.StringUtils;
+import com.google.maps.GeoApiContext;
+import com.google.maps.GeocodingApi;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.GeocodingResult;
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.model.geojson.Point;
+import com.mongodb.client.model.geojson.Position;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 /**
  * Class that represents the view for the order.
@@ -118,7 +126,20 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     Order order = new Order(LocalDate.now(), LocalDate.now(), sourceAddress, destinationAddress,
         Status.WAREHOUSE_EXIT, addresseeName, remitterName, Integer.parseInt(price), isCashOn,
         descriptionAddress, "", responsible);
+
     orderController.add(order);
+    if (!sourceAddress.isEmpty() || sourceAddress != null) {
+      try {
+        Node start = orderController.findNode(geocoding(sourceAddress));
+        Node finish = orderController.findNode(geocoding(destinationAddress));
+        orderController.editPathOrder(start, finish, order);
+
+      } catch (ApiException | InterruptedException | IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+
     resp.sendRedirect("/project-programation/orders");
     return;
 
@@ -222,7 +243,6 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     order.setStatus(Status.fromString(state));
     order.setResponsible(responsible);
     orderController.edit(order);
-
     resp.sendRedirect("/project-programation/orders");
   }
 
@@ -270,5 +290,25 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     orderController.editStatus(id, status);
 
     resp.sendRedirect("/project-programation/orders");
+  }
+
+  private Point geocoding(String address) throws ApiException, InterruptedException, IOException {
+    GeoApiContext context = new GeoApiContext.Builder().apiKey("").build();
+    GeocodingResult[] response =
+        GeocodingApi.geocode(context, address + ",Sogamoso,Boyaca,Colombia").await();
+    if (response != null && response.length > 0) {
+      double lng = response[0].geometry.location.lng;
+      double lat = response[0].geometry.location.lat;
+      double[] location = new double[2];
+      location[0] = lat;
+      location[1] = lng;
+
+      Point point = new Point(new Position(lng, lat));
+      context.shutdown();
+
+      return point;
+    } else {
+      return null;
+    }
   }
 }

@@ -142,4 +142,4 @@ public class AlgorithmStar {
   public List<Node> getNodes() {
     return nodes;
   }
-
+}

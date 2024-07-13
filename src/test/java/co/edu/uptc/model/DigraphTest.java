@@ -26,16 +26,16 @@ public class DigraphTest {
   @Before
   public void setUp() {
 
-    Node node = new Node(1, new Properties(1, 5.7142417, -72.9368016, 4, null),
+    Node node = new Node(1.0, new PropertiesNode(1.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-    Node node2 = new Node(2, new Properties(2, 5.7142417, -72.9368016, 4, null),
+    Node node2 = new Node(2.0, new PropertiesNode(2.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-    Node node3 = new Node(3, new Properties(3, 5.7142417, -72.9368016, 4, null),
+    Node node3 = new Node(3.0, new PropertiesNode(3.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-    Node node4 = new Node(4, new Properties(4, 5.7142417, -72.9368016, 4, null),
+    Node node4 = new Node(4.0, new PropertiesNode(4.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
     nodes.add(node);
@@ -43,8 +43,8 @@ public class DigraphTest {
     nodes.add(node3);
     nodes.add(node4);
 
-    PropertiesEdge propertiesEdge = new PropertiesEdge(1, 2, 0, null, "unclassified", false, null,
-        0, 0, 0, null, null, null, null, null);
+    PropertiesEdge propertiesEdge = new PropertiesEdge(1.0, 2.0, 0.0, null, null, false, null, 0.0,
+        0.0, 0.0, null, null, null, null, null);
 
     Position position1 = new Position(-72.9289882, 5.6652957);
     Position position2 = new Position(-72.9285979, 5.6654118);
@@ -56,22 +56,22 @@ public class DigraphTest {
     positions.add(position1);
     LineString geometry = new LineString(positions);
 
-    Edge edge = new Edge(12, propertiesEdge, geometry);
+    Edge edge = new Edge(12.0, propertiesEdge, geometry);
 
-    PropertiesEdge propertiesEdge2 = new PropertiesEdge(2, 3, 0, null, "unclassified", false, null,
-        0, 0, 0, null, null, null, null, null);
+    PropertiesEdge propertiesEdge2 = new PropertiesEdge(2.0, 3.0, 0.0, null, null, false, null, 0,
+        0, 0, null, null, null, null, null);
 
-    Edge edge2 = new Edge(13, propertiesEdge2, geometry);
+    Edge edge2 = new Edge(13.0, propertiesEdge2, geometry);
 
-    PropertiesEdge propertiesEdge3 = new PropertiesEdge(2, 4, 0, null, "unclassified", false, null,
-        0, 0, 0, null, null, null, null, null);
+    PropertiesEdge propertiesEdge3 = new PropertiesEdge(2.0, 4.0, 0.0, null, null, false, null, 0,
+        0, 0, null, null, null, null, null);
 
-    Edge edge3 = new Edge(13, propertiesEdge3, geometry);
+    Edge edge3 = new Edge(13.0, propertiesEdge3, geometry);
 
-    PropertiesEdge propertiesEdge4 = new PropertiesEdge(3, 1, 0, null, "unclassified", false, null,
-        0, 0, 0, null, null, null, null, null);
+    PropertiesEdge propertiesEdge4 = new PropertiesEdge(3.0, 1.0, 0, null, null, false, null, 0, 0,
+        0, null, null, null, null, null);
 
-    Edge edge4 = new Edge(13, propertiesEdge4, geometry);
+    Edge edge4 = new Edge(13.0, propertiesEdge4, geometry);
 
     edges.add(edge);
     edges.add(edge2);
@@ -81,11 +81,10 @@ public class DigraphTest {
 
   @Test
   public void addNode() {
-
-    Node node = new Node(1, new Properties(316951892, 5.7142417, -72.9368016, 4, null),
+    Node node = new Node(1.0, new PropertiesNode(316951892.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
-    Node node2 = new Node(1, new Properties(316951892, 5.7142417, -72.9368016, 4, null),
+    Node node2 = new Node(1.0, new PropertiesNode(316951892.0, 5.7142417, -72.9368016, 4.0, null),
         new Point(new Position(-72.9368016, 5.7142417)));
 
     Digraph digraph = new Digraph();

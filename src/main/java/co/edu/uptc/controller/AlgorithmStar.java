@@ -65,7 +65,8 @@ public class AlgorithmStar {
    * @return A list of shortest paths from start to finish, sorted by their estimated cost.
    */
   public List<Path> findShortestPaths(Node start, Node finish, int k) {
-    // Estructuras de datos necesarias
+    start = this.findNode(start.getProperties().getOsmid());
+    finish = this.findNode(finish.getProperties().getOsmid());
     PriorityQueue<Path> openList =
         new PriorityQueue<>(Comparator.comparingDouble(Path::getEstimatedCost));
     Map<Node, List<Double>> scoreMap = new HashMap<>();
@@ -130,12 +131,9 @@ public class AlgorithmStar {
    *         identifier is found.
    */
   public Node findNode(double idNode) {
-    for (Node node : nodes) {
-      if (node.getProperties().getOsmid().equals(idNode)) {
-        return node;
-      }
-    }
-    return null;
+    return this.nodes.stream().filter(node -> node.getProperties().getOsmid().equals(idNode))
+
+        .findFirst().orElse(null);
   }
 
   public List<Node> getNodes() {

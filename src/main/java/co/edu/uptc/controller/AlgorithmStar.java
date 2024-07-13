@@ -117,14 +117,11 @@ public class AlgorithmStar {
       }
     }
     allPaths.sort(Comparator.comparingDouble(Path::getEstimatedCost));
+    allPaths.get(0).setColor("#4D5656");
 
-    fastestPaths.sort(Comparator.comparingDouble(Path::getEstimatedCost));
-    fastestPaths.get(0).setColor("#4D5656");
-
-    for (int i = 1; i < fastestPaths.size(); i++) {
-      fastestPaths.get(i).setColor("#909497");
+    for (int i = 1; i < allPaths.size(); i++) {
+      allPaths.get(i).setColor("#909497");
     }
-    return fastestPaths;
     return allPaths;
   }
 
@@ -144,14 +141,10 @@ public class AlgorithmStar {
     return null;
   }
 
-  <<<<<<<HEAD=======
-
   public List<Node> getNodes() {
     return nodes;
   }
 
-
-  >>>>>>>ec5361a3867adaf9d127b13ec15499b4915b3bbb
 
 }
 

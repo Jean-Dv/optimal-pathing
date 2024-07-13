@@ -2,6 +2,7 @@ package co.edu.uptc.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import org.bson.Document;
 
 /**
@@ -38,6 +39,7 @@ public class Path extends AggregateRoot {
   /**
    * Parameterized constructor.
    *
+   * @param id The unique identifier for the path.
    * @param start The initial node.
    * @param finish The finish node.
    * @param edges The edges that have that path.
@@ -45,8 +47,9 @@ public class Path extends AggregateRoot {
    * @param estimatedCost It is estimated cost of the route used for the search.
    * @param color The color is what identifies it as the shortest route.
    */
-  public Path(Node start, Node finish, List<Edge> edges, double cost, double estimatedCost,
+  public Path(UUID id, Node start, Node finish, List<Edge> edges, double cost, double estimatedCost,
       String color) {
+    super(id);
     this.start = start;
     this.finish = finish;
     this.edges = edges;
@@ -54,7 +57,6 @@ public class Path extends AggregateRoot {
     this.estimatedCost = estimatedCost;
     this.color = color;
   }
-
 
   public Node getStar() {
     return start;
@@ -121,12 +123,14 @@ public class Path extends AggregateRoot {
   @Override
   public Document toDocument() {
     Document document = new Document();
+    document.append("_id", this.id.toString());
     document.append("nodeStart", this.start.toDocument());
     document.append("nodeFinish", this.finish.toDocument());
-    document.append("edges", this.edges);
     document.append("cost", this.cost);
     document.append("estimatedCost", this.estimatedCost);
     document.append("colorPath", this.color);
+    List<Document> edgesDocuments = this.edges.stream().map(Edge::toDocument).toList();
+    document.append("edges", edgesDocuments);
     return document;
   }
 
@@ -138,20 +142,19 @@ public class Path extends AggregateRoot {
    */
   public static Path fromDocument(Document document) {
 
+    UUID id = UUID.fromString(document.getString("_id"));
     Node start = Node.fromDocument((Document) document.get("nodeStart"));
     Node finish = Node.fromDocument((Document) document.get("nodeFinish"));
     List<Edge> edges = new ArrayList<>();
-    try {
-      edges = document.getList("edges", Edge.class);
-    } catch (ClassCastException e) {
-      Edge edge = Edge.fromDocument((Document) document.get("edge"));
-      edges.add(edge);
+    List<Document> edgesDocuments = document.getList("edges", Document.class);
+    for (Document document2 : edgesDocuments) {
+      edges.add(Edge.fromDocument(document2));
     }
     double cost = document.getDouble("cost");
     double estimatedCost = document.getDouble("estimatedCost");
     String color = document.getString("colorPath");
 
-    return new Path(start, finish, edges, cost, estimatedCost, color);
+    return new Path(id, start, finish, edges, cost, estimatedCost, color);
 
   }
 

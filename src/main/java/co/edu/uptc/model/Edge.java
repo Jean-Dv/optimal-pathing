@@ -66,9 +66,9 @@ public class Edge extends AggregateRoot {
   public Document toDocument() {
     Document document = new Document();
     Document geometryDocument = new Document();
-    geometryDocument.append("type", this.type.toString());
-    geometryDocument.append("coordinates", this.geometry.getCoordinates());
-
+    geometryDocument.append("type", "LineString");
+    geometryDocument.append("coordinates",
+        this.geometry.getCoordinates().stream().map(coordinate -> coordinate.getValues()).toList());
     document.append("type", this.type.toString());
     document.append("id", this.identifier);
     document.append("properties", this.properties.toDocument());

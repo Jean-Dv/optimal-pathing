@@ -1,6 +1,7 @@
 package co.edu.uptc.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.bson.Document;
@@ -229,7 +230,12 @@ public class Order extends AggregateRoot {
     document.append("description", this.description);
     document.append("observation", this.observation);
     document.append("responsible", this.responsible.toDocument());
-    document.append("optimalRoutes", this.optimalRoutes);
+    if (this.optimalRoutes != null) {
+      List<Document> optimalRoutesDocuments =
+          this.optimalRoutes.stream().map(Path::toDocument).toList();
+      document.append("optimalRoutes", optimalRoutesDocuments);
+    }
+
     return document;
   }
 
@@ -253,7 +259,14 @@ public class Order extends AggregateRoot {
     String description = document.getString("description");
     String observation = document.getString("observation");
     Responsible responsible = Responsible.fromDocument((Document) document.get("responsible"));
-    List<Path> optimalRoutes = document.getList("optimalRoutes", Path.class);
+    List<Document> optimalRoutesDocument = document.getList("optimalRoutes", Document.class);
+    List<Path> optimalRoutes = new ArrayList<>();
+    if (optimalRoutesDocument != null) {
+      for (Document document2 : optimalRoutesDocument) {
+        optimalRoutes.add(Path.fromDocument(document2));
+      }
+    }
+
     return new Order(id, dateIssue, deadline, sourceAddress, destinationAddress, status,
         addresseeName, remitterName, shippingValue, cashonDelivery, description, observation,
         responsible, optimalRoutes);

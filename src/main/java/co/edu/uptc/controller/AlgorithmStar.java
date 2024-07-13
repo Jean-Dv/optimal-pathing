@@ -2,6 +2,7 @@ package co.edu.uptc.controller;
 
 import co.edu.uptc.infrastructure.MongoClientFactory;
 import co.edu.uptc.infrastructure.digraph.DigraphLoader;
+import co.edu.uptc.model.Digraph;
 import co.edu.uptc.model.Edge;
 import co.edu.uptc.model.Node;
 import co.edu.uptc.model.Path;
@@ -33,18 +34,22 @@ public class AlgorithmStar {
     digraphLoader = new DigraphLoader(mongoClient);
     digraphLoader.setDatabase("logistics");
 
-    adjacencyList = digraphLoader.loadDigraph().getAdjacencyList();
-    nodes = digraphLoader.loadDigraph().getNodes();
+    Digraph digraph = digraphLoader.loadDigraph();
+    if (digraph != null) {
+      adjacencyList = digraph.getAdjacencyList();
+      nodes = digraph.getNodes();
+    } else {
+      adjacencyList = new HashMap<>();
+      nodes = new ArrayList<>();
+      throw new RuntimeException("Failed to load graph from MongoDB");
+    }
+
   }
-
-
 
   public AlgorithmStar(Map<Node, List<Edge>> adjacencyList, List<Node> nodes) {
     this.nodes = nodes;
     this.adjacencyList = adjacencyList;
   }
-
-
 
   private double heuristic(Node node, Node finish) {
     return Math.sqrt(Math
@@ -59,13 +64,13 @@ public class AlgorithmStar {
    * @param finish The destination node where the search terminates.
    * @return A list of shortest paths from start to finish, sorted by their estimated cost.
    */
-  public List<Path> findShortestPaths(Node start, Node finish) {
+  public List<Path> findShortestPaths(Node start, Node finish, int k) {
     PriorityQueue<Path> openList =
         new PriorityQueue<>(Comparator.comparingDouble(Path::getEstimatedCost));
-    Map<Node, Double> scoreMap = new HashMap<>();
-    List<Path> fastestPaths = new ArrayList<>(); // Para almacenar las dos rutas más rápidas
+    Map<Node, List<Double>> scoreMap = new HashMap<>();
+    List<Path> allPaths = new ArrayList<>();
 
-    scoreMap.put(start, 0.0);
+    scoreMap.put(start, new ArrayList<>(List.of(0.0)));
     openList.add(new Path(start, start, new ArrayList<>(), 0, heuristic(start, finish)));
 
     while (!openList.isEmpty()) {
@@ -73,10 +78,9 @@ public class AlgorithmStar {
       Node currentNode = currentPath.getFinish();
 
       if (currentNode.equals(finish)) {
-        fastestPaths.add(currentPath);
-        if (fastestPaths.size() > 2) {
-          fastestPaths.sort(Comparator.comparingDouble(Path::getEstimatedCost));
-          fastestPaths.subList(2, fastestPaths.size()).clear();
+        allPaths.add(currentPath);
+        if (allPaths.size() >= k) {
+          break;
         }
         continue;
       }
@@ -87,18 +91,32 @@ public class AlgorithmStar {
           continue;
         }
 
-        double tentativeGscore = scoreMap.getOrDefault(currentNode, Double.POSITIVE_INFINITY)
+        double tentativeGscore = currentPath.getCost()
             + (edge.getProperties().getLength() / edge.getProperties().getMaxspeed());
 
-        if (tentativeGscore < scoreMap.getOrDefault(neighbor, Double.POSITIVE_INFINITY)) {
-          List<Edge> newEdges = new ArrayList<>(currentPath.getEdges());
-          newEdges.add(edge);
-          scoreMap.put(neighbor, tentativeGscore);
-          double finalScore = tentativeGscore + heuristic(neighbor, finish);
-          openList.add(new Path(start, neighbor, newEdges, tentativeGscore, finalScore));
+        List<Edge> newEdges = new ArrayList<>(currentPath.getEdges());
+        newEdges.add(edge);
+        double finalScore = tentativeGscore + heuristic(neighbor, finish);
+        Path newPath = new Path(start, neighbor, newEdges, tentativeGscore, finalScore);
+
+        if (!scoreMap.containsKey(neighbor)) {
+          scoreMap.put(neighbor, new ArrayList<>(List.of(tentativeGscore)));
+          openList.add(newPath);
+        } else {
+          List<Double> scores = scoreMap.get(neighbor);
+
+          if (scores.size() < k || tentativeGscore < scores.get(scores.size() - 1)) {
+            scores.add(tentativeGscore);
+            scores.sort(Double::compareTo);
+            if (scores.size() > k) {
+              scores.remove(scores.size() - 1);
+            }
+            openList.add(newPath);
+          }
         }
       }
     }
+    allPaths.sort(Comparator.comparingDouble(Path::getEstimatedCost));
 
     fastestPaths.sort(Comparator.comparingDouble(Path::getEstimatedCost));
     fastestPaths.get(0).setColor("#4D5656");
@@ -107,8 +125,8 @@ public class AlgorithmStar {
       fastestPaths.get(i).setColor("#909497");
     }
     return fastestPaths;
+    return allPaths;
   }
-
 
   /**
    * Finds a node in the list of nodes by its OSM identifier.
@@ -126,5 +144,14 @@ public class AlgorithmStar {
     return null;
   }
 
+  <<<<<<<HEAD=======
+
+  public List<Node> getNodes() {
+    return nodes;
+  }
+
+
+  >>>>>>>ec5361a3867adaf9d127b13ec15499b4915b3bbb
 
 }
+

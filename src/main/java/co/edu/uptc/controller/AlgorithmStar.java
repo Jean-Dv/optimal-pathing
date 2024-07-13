@@ -119,7 +119,6 @@ public class AlgorithmStar {
       }
     }
     allPaths.sort(Comparator.comparingDouble(Path::getEstimatedCost));
-
     return allPaths;
   }
 
@@ -132,14 +131,10 @@ public class AlgorithmStar {
    */
   public Node findNode(double idNode) {
     return this.nodes.stream().filter(node -> node.getProperties().getOsmid().equals(idNode))
-
         .findFirst().orElse(null);
   }
 
   public List<Node> getNodes() {
     return nodes;
   }
-
-
-
 }

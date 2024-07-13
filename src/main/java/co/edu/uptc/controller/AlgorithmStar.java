@@ -122,6 +122,7 @@ public class AlgorithmStar {
     for (int i = 1; i < allPaths.size(); i++) {
       allPaths.get(i).setColor("#909497");
     }
+
     return allPaths;
   }
 
@@ -144,7 +145,5 @@ public class AlgorithmStar {
   public List<Node> getNodes() {
     return nodes;
   }
-
-
 }
 

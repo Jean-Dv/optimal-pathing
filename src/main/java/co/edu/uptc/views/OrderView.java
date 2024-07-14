@@ -139,6 +139,12 @@ public class OrderView extends HttpServlet implements SupportsPatch {
         e.printStackTrace();
       }
     }
+    String json = orderController.routesGson(order);
+
+    // Mostrar el JSON en la respuesta
+    resp.setContentType("application/json");
+    resp.setCharacterEncoding("UTF-8");
+    resp.getWriter().write(json);
 
     resp.sendRedirect("/project-programation/orders");
     return;
@@ -148,6 +154,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+
 
     String id = req.getParameter("id");
     String action = req.getParameter("action");

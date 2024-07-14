@@ -295,7 +295,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
   }
 
   private Point geocoding(String address) throws ApiException, InterruptedException, IOException {
-    Properties properties = PropertiesUtils.loadProperties("application.properties");
+    Properties properties = PropertiesUtils.loadProperties("local.properties");
     String apiKey = properties.getProperty("googlemaps.api.key");
     GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
     GeocodingResult[] response =

@@ -1,5 +1,6 @@
 package co.edu.uptc.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 
@@ -8,19 +9,19 @@ import org.bson.Document;
  * Class that represents the Properties.
  */
 public class PropertiesEdge implements Documentable {
-  private int startNode;
-  private long endNode;
+  private Double startNode;
+  private Double endNode;
   private double key;
-  private List<Integer> osmid;
-  private String highway;
+  private List<Double> osmid;
+  private List<String> highway;
   private boolean oneway;
   private List<Boolean> reversed;
   private double length;
   private double maxspeed;
   private double weight;
-  private String lanes;
-  private String name;
-  private String width;
+  private List<String> lanes;
+  private List<String> name;
+  private List<String> width;
   private String bridge;
   private String junction;
 
@@ -44,9 +45,10 @@ public class PropertiesEdge implements Documentable {
    * @param junction Indicates if the road is a junction.
    */
 
-  public PropertiesEdge(int startNode, long endNode, double key, List<Integer> osmid,
-      String highway, boolean oneway, List<Boolean> reversed, double length, double maxspeed,
-      double weight, String lanes, String name, String width, String bridge, String junction) {
+  public PropertiesEdge(Double startNode, Double endNode, double key, List<Double> osmid,
+      List<String> highway, boolean oneway, List<Boolean> reversed, double length, double maxspeed,
+      double weight, List<String> lanes, List<String> name, List<String> width, String bridge,
+      String junction) {
     this.startNode = startNode;
     this.endNode = endNode;
     this.key = key;
@@ -64,19 +66,19 @@ public class PropertiesEdge implements Documentable {
     this.junction = junction;
   }
 
-  public int getStartNode() {
+  public Double getStartNode() {
     return startNode;
   }
 
-  public void setStartNode(int startNode) {
+  public void setStartNode(Double startNode) {
     this.startNode = startNode;
   }
 
-  public double getEndNode() {
+  public Double getEndNode() {
     return endNode;
   }
 
-  public void setEndNode(long endNode) {
+  public void setEndNode(Double endNode) {
     this.endNode = endNode;
   }
 
@@ -88,19 +90,19 @@ public class PropertiesEdge implements Documentable {
     this.key = key;
   }
 
-  public List<Integer> getOsmid() {
+  public List<Double> getOsmid() {
     return osmid;
   }
 
-  public void setOsmid(List<Integer> osmid) {
+  public void setOsmid(List<Double> osmid) {
     this.osmid = osmid;
   }
 
-  public String getHighway() {
+  public List<String> getHighway() {
     return highway;
   }
 
-  public void setHighway(String highway) {
+  public void setHighway(List<String> highway) {
     this.highway = highway;
   }
 
@@ -144,27 +146,27 @@ public class PropertiesEdge implements Documentable {
     this.weight = weight;
   }
 
-  public String getLanes() {
+  public List<String> getLanes() {
     return lanes;
   }
 
-  public void setLanes(String lanes) {
+  public void setLanes(List<String> lanes) {
     this.lanes = lanes;
   }
 
-  public String getName() {
+  public List<String> getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(List<String> name) {
     this.name = name;
   }
 
-  public String getWidth() {
+  public List<String> getWidth() {
     return width;
   }
 
-  public void setWidth(String width) {
+  public void setWidth(List<String> width) {
     this.width = width;
   }
 
@@ -212,22 +214,64 @@ public class PropertiesEdge implements Documentable {
    * @return A Properties object with the data of the Document object.
    */
   public static PropertiesEdge fromDocument(Document document) {
-    int startNode = document.getInteger("u");
-    Long endNode = document.getLong("v");
-    int key = document.getInteger("key");
-    List<Integer> osmid = document.getList("osmid", Integer.class);
-    String highway = document.getString("highway");
+    List<Boolean> reversed = new ArrayList<Boolean>();
+    List<String> name = new ArrayList<String>();
+    List<String> highway = new ArrayList<String>();
+    List<String> lanes = new ArrayList<String>();
+    List<String> width = new ArrayList<String>();
+    List<Double> osmid = new ArrayList<>();
+    try {
+      String highwayString = document.getString("highway");
+      highway.add(highwayString);
+    } catch (ClassCastException e) {
+      highway = document.getList("highway", String.class);
+    }
+    try {
+      reversed = document.getList("reversed", Boolean.class);
+    } catch (ClassCastException e) {
+      String reversedString = document.getString("reversed");
+      if (reversedString.toLowerCase().equals("true")) {
+        reversed.add(true);
+      } else {
+        reversed.add(false);
+      }
+    }
+    try {
+      String nameString = document.getString("name");
+      name.add(nameString);
+    } catch (ClassCastException e) {
+      name = document.getList("name", String.class);
+    }
+    try {
+      String lanesString = document.getString("lanes");
+      lanes.add(lanesString);
+    } catch (ClassCastException e) {
+      lanes = document.getList("lanes", String.class);
+    }
+    try {
+      String widthString = document.getString("width");
+      width.add(widthString);
+    } catch (ClassCastException e) {
+      width = document.getList("width", String.class);
+    }
+    try {
+      osmid = document.getList("osmid", Double.class);
+    } catch (ClassCastException e) {
+      String osmidString = document.getString("osmid");
+      osmid.add(Double.parseDouble(osmidString));
+    }
     boolean oneway = document.getBoolean("oneway");
-    List<Boolean> reverse = document.getList("reverse", Boolean.class);
+    Double startNode = document.getDouble("u");
+    Double endNode = document.getDouble("v");
+    Double key = document.getDouble("key");
+
+
     double length = document.getDouble("length");
-    int maxspeed = document.getInteger("maxspeed");
+    Double maxspeed = document.getDouble("maxspeed");
     double weight = document.getDouble("weight");
-    String lanes = document.getString("lanes");
-    String name = document.getString("name");
-    String width = document.getString("width");
     String bridge = document.getString("bridge");
     String junction = document.getString("junction");
-    return new PropertiesEdge(startNode, endNode, key, osmid, highway, oneway, reverse, length,
+    return new PropertiesEdge(startNode, endNode, key, osmid, highway, oneway, reversed, length,
         maxspeed, weight, lanes, name, width, bridge, junction);
   }
 

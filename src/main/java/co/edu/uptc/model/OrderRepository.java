@@ -1,6 +1,8 @@
 package co.edu.uptc.model;
 
+import com.mongodb.client.model.geojson.Point;
 import java.util.List;
+import org.bson.Document;
 
 /**
  * Interface that represents the repository of orders.
@@ -43,4 +45,6 @@ public interface OrderRepository {
    * @return Find order.
    */
   Order findById(String orderId);
+
+  Document findByPoint(Point point);
 }

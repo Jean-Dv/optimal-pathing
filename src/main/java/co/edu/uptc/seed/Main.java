@@ -17,8 +17,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 
-
-class Main {
+/**
+ * Class that represents the main class of the application.
+ */
+public class Main {
   private static final Logger logger = LogManager.getLogger(Main.class);
   private static final Type DOCUMENT_TYPE = new TypeToken<List<Document>>() {}.getType();
   private MongoClient mongoClient =
@@ -26,16 +28,21 @@ class Main {
   private MongoCollection<Document> nodesCollection;
   private MongoCollection<Document> edgesCollection;
 
+  /**
+   * Main method of the application.
+   *
+   * @param args Arguments passed to the application.
+   */
   public static void main(String[] args) {
     new Main().run();
   }
 
   private void run() {
     Properties appProps = loadProperties();
-    this.nodesCollection =
-        mongoClient.getDatabase(appProps.getProperty("mongodb.database")).getCollection("nodes");
-    this.edgesCollection =
-        mongoClient.getDatabase(appProps.getProperty("mongodb.database")).getCollection("edges");
+    this.nodesCollection = mongoClient
+        .getDatabase(appProps.getProperty("mongodb.database", "logistics")).getCollection("nodes");
+    this.edgesCollection = mongoClient
+        .getDatabase(appProps.getProperty("mongodb.database", "logistics")).getCollection("edges");
 
     List<Document> nodes = this.loadJson("nodes-compact.geojson");
     this.nodesCollection.deleteMany(new Document());

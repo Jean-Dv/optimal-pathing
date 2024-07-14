@@ -13,7 +13,7 @@ import org.bson.Document;
 public class Edge extends AggregateRoot {
 
   private FeatureType type = FeatureType.FEATURE;
-  private int identifier;
+  private Double identifier;
   private PropertiesEdge properties;
   private LineString geometry;
 
@@ -24,7 +24,7 @@ public class Edge extends AggregateRoot {
    * @param properties The properties of the edge.
    * @param geometry The geometry of the edge.
    */
-  public Edge(int identifier, PropertiesEdge properties, LineString geometry) {
+  public Edge(Double identifier, PropertiesEdge properties, LineString geometry) {
     this.identifier = identifier;
     this.properties = properties;
     this.geometry = geometry;
@@ -38,11 +38,11 @@ public class Edge extends AggregateRoot {
     this.type = type;
   }
 
-  public int getIdentifier() {
+  public Double getIdentifier() {
     return identifier;
   }
 
-  public void setIdentifier(int identifier) {
+  public void setIdentifier(Double identifier) {
     this.identifier = identifier;
   }
 
@@ -66,9 +66,9 @@ public class Edge extends AggregateRoot {
   public Document toDocument() {
     Document document = new Document();
     Document geometryDocument = new Document();
-    geometryDocument.append("type", this.type.toString());
-    geometryDocument.append("coordinates", this.geometry.getCoordinates());
-
+    geometryDocument.append("type", "LineString");
+    geometryDocument.append("coordinates",
+        this.geometry.getCoordinates().stream().map(coordinate -> coordinate.getValues()).toList());
     document.append("type", this.type.toString());
     document.append("id", this.identifier);
     document.append("properties", this.properties.toDocument());
@@ -83,7 +83,7 @@ public class Edge extends AggregateRoot {
    * @return The node created from the document.
    */
   public static Edge fromDocument(Document document) {
-    int identifier = document.getInteger("id");
+    Double identifier = document.getDouble("id");
     PropertiesEdge properties = PropertiesEdge.fromDocument((Document) document.get("properties"));
 
     List<List<Double>> coordinates = getCoordinatesList(

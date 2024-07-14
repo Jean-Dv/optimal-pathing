@@ -34,7 +34,7 @@ public class DigraphLoader {
    */
   public DigraphLoader(MongoClient client) {
     Properties props = this.loadProperties();
-    this.database = props.getProperty("mongodb.database");
+    this.database = props.getProperty("mongodb.database", "logistics");
     this.client = client;
   }
 

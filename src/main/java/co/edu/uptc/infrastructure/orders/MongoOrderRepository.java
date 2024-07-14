@@ -71,7 +71,7 @@ public class MongoOrderRepository extends MongoRepository<Order> implements Orde
    */
   private MongoCollection<Document> getCollectionNodes() {
     Properties appProps = PropertiesUtils.loadProperties("application.properties");
-    return this.client().getDatabase(appProps.getProperty("mongodb.database"))
+    return this.client().getDatabase(appProps.getProperty("mongodb.database", "logistics"))
         .getCollection("nodes");
   }
 

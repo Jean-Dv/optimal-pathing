@@ -36,7 +36,7 @@ public class AlgorithmStar {
     digraphLoader = new DigraphLoader(mongoClient);
     Properties properties = PropertiesUtils.loadProperties("application.properties");
 
-    digraphLoader.setDatabase(properties.getProperty("mongodb.database"));
+    digraphLoader.setDatabase(properties.getProperty("mongodb.database", "logistics"));
 
     Digraph digraph = digraphLoader.loadDigraph();
     if (digraph != null) {

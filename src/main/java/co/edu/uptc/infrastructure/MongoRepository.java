@@ -27,7 +27,7 @@ public abstract class MongoRepository<T extends AggregateRoot> {
    */
   public MongoRepository(MongoClient client) {
     Properties appProps = PropertiesUtils.loadProperties("application.properties");
-    this.database = appProps.getProperty("mongodb.database");
+    this.database = appProps.getProperty("mongodb.database", "logistics");
     this.client = client;
   }
 

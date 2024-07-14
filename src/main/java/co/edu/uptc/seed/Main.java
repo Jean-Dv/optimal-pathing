@@ -39,10 +39,10 @@ public class Main {
 
   private void run() {
     Properties appProps = loadProperties();
-    this.nodesCollection =
-        mongoClient.getDatabase(appProps.getProperty("mongodb.database")).getCollection("nodes");
-    this.edgesCollection =
-        mongoClient.getDatabase(appProps.getProperty("mongodb.database")).getCollection("edges");
+    this.nodesCollection = mongoClient
+        .getDatabase(appProps.getProperty("mongodb.database", "logistics")).getCollection("nodes");
+    this.edgesCollection = mongoClient
+        .getDatabase(appProps.getProperty("mongodb.database", "logistics")).getCollection("edges");
 
     List<Document> nodes = this.loadJson("nodes-compact.geojson");
     this.nodesCollection.deleteMany(new Document());

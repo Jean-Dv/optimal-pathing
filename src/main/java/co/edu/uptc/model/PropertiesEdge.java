@@ -262,7 +262,6 @@ public class PropertiesEdge implements Documentable {
     }
     boolean oneway = document.getBoolean("oneway");
     Double startNode = document.getDouble("u");
-    System.out.println(startNode);
     Double endNode = document.getDouble("v");
     Double key = document.getDouble("key");
 

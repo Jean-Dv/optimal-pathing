@@ -5,8 +5,12 @@ import co.edu.uptc.model.Node;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
 import co.edu.uptc.model.Path;
+import co.edu.uptc.model.Route;
 import co.edu.uptc.model.Status;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mongodb.client.model.geojson.Point;
+import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 
@@ -122,5 +126,35 @@ public class OrderController {
     }
     return this.edit(order);
   }
+
+  /**
+   * Generates a JSON representation of optimal routes for an order, including status and route
+   * details. If no optimal routes are found for the order, returns a JSON with status false.
+   *
+   * @param order The order for which to generate the JSON representation of optimal routes.
+   * @return A JSON string representing the optimal routes and status of the order.
+   */
+  public String routesGson(Order order) {
+    boolean ok = false;
+    List<Path> data = new ArrayList<>();
+    Node start = null;
+    Node finish = null;
+
+    if (order == null || order.getOptimalRoutes() == null || order.getOptimalRoutes().isEmpty()) {
+      Route route = new Route(ok, start, finish, data);
+      Gson gson = new GsonBuilder().setPrettyPrinting().create();
+      return gson.toJson(route);
+    }
+
+    ok = true;
+    data = order.getOptimalRoutes();
+    start = order.getOptimalRoutes().get(0).getStar();
+    finish = order.getOptimalRoutes().get(0).getFinish();
+    Route route = new Route(ok, start, finish, data);
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    return gson.toJson(route);
+  }
+
+
 
 }

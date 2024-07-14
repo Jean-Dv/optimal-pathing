@@ -15,6 +15,7 @@ import co.edu.uptc.model.ResponsibleRepository;
 import co.edu.uptc.model.SettingsRepository;
 import co.edu.uptc.model.Status;
 import co.edu.uptc.model.SupportsPatch;
+import co.edu.uptc.utils.PropertiesUtils;
 import co.edu.uptc.utils.ServletUtils;
 import co.edu.uptc.utils.StringUtils;
 import com.google.maps.GeoApiContext;
@@ -27,6 +28,7 @@ import com.mongodb.client.model.geojson.Position;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -293,7 +295,9 @@ public class OrderView extends HttpServlet implements SupportsPatch {
   }
 
   private Point geocoding(String address) throws ApiException, InterruptedException, IOException {
-    GeoApiContext context = new GeoApiContext.Builder().apiKey("").build();
+    Properties properties = PropertiesUtils.loadProperties("application.properties");
+    String apiKey = properties.getProperty("googlemaps.api.key");
+    GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
     GeocodingResult[] response =
         GeocodingApi.geocode(context, address + ",Sogamoso,Boyacá,Colombia").await();
     if (response != null && response.length > 0) {

@@ -6,6 +6,7 @@ import co.edu.uptc.model.Digraph;
 import co.edu.uptc.model.Edge;
 import co.edu.uptc.model.Node;
 import co.edu.uptc.model.Path;
+import co.edu.uptc.utils.PropertiesUtils;
 import com.mongodb.client.MongoClient;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Properties;
 
 /**
  * Represents a controller class for the A* algorithm.
@@ -32,7 +34,9 @@ public class AlgorithmStar {
     mongoClient =
         MongoClientFactory.createClient("testingDigraphLoader", "mongodb://localhost:27017");
     digraphLoader = new DigraphLoader(mongoClient);
-    digraphLoader.setDatabase("logistics");
+    Properties properties = PropertiesUtils.loadProperties("application.properties");
+
+    digraphLoader.setDatabase(properties.getProperty("mongodb.database"));
 
     Digraph digraph = digraphLoader.loadDigraph();
     if (digraph != null) {

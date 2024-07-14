@@ -5,11 +5,13 @@ import static com.mongodb.client.model.Filters.nearSphere;
 import co.edu.uptc.infrastructure.MongoRepository;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
+import co.edu.uptc.utils.PropertiesUtils;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.geojson.Point;
 import java.util.ArrayList;
+import java.util.Properties;
 import org.bson.Document;
 
 /**
@@ -68,7 +70,9 @@ public class MongoOrderRepository extends MongoRepository<Order> implements Orde
    * @return The collection of nodes in documents.
    */
   private MongoCollection<Document> getCollectionNodes() {
-    return this.client().getDatabase("logistics").getCollection("nodes");
+    Properties appProps = PropertiesUtils.loadProperties("application.properties");
+    return this.client().getDatabase(appProps.getProperty("mongodb.database"))
+        .getCollection("nodes");
   }
 
 

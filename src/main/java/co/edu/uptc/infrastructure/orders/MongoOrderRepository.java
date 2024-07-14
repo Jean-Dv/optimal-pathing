@@ -55,7 +55,7 @@ public class MongoOrderRepository extends MongoRepository<Order> implements Orde
 
   @Override
   public Document findByPoint(Point point) {
-    return getCollectionNodes().find(nearSphere("geometry", point, 10.0, 0.0)).first();
+    return getCollectionNodes().find(nearSphere("geometry", point, null, null)).first();
   }
 
   protected String collectionName() {

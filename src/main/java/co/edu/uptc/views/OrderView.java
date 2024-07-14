@@ -295,7 +295,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
   private Point geocoding(String address) throws ApiException, InterruptedException, IOException {
     GeoApiContext context = new GeoApiContext.Builder().apiKey("").build();
     GeocodingResult[] response =
-        GeocodingApi.geocode(context, address + ",Sogamoso,Boyaca,Colombia").await();
+        GeocodingApi.geocode(context, address + ",Sogamoso,Boyacá,Colombia").await();
     if (response != null && response.length > 0) {
       double lng = response[0].geometry.location.lng;
       double lat = response[0].geometry.location.lat;

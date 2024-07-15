@@ -5,13 +5,16 @@ import co.edu.uptc.model.Node;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.OrderRepository;
 import co.edu.uptc.model.Path;
+import co.edu.uptc.model.Responsible;
 import co.edu.uptc.model.Route;
 import co.edu.uptc.model.Status;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.client.model.geojson.Point;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.bson.Document;
 
 /**
@@ -156,5 +159,48 @@ public class OrderController {
   }
 
 
+  /**
+   * Filters orders based on specified criteria.
+   *
+   * @param dateIssue Date when orders were issued. Null to ignore filtering by issue date.
+   * @param deadline Delivery deadline for orders. Null to ignore filtering by deadline.
+   * @param sourceAddress Source address of orders. Null to ignore filtering by source address.
+   * @param destinationAddress Destination address of orders. Null to ignore filtering by
+   *        destination address.
+   * @param status Status of orders. Null to ignore filtering by status.
+   * @param addresseeName Name of the addressee. Null to ignore filtering by addressee name.
+   * @param remitterName Name of the remitter. Null to ignore filtering by remitter name.
+   * @param shippingValue Shipping cost of orders. Less than or equal to zero to ignore filtering by
+   *        shipping value.
+   * @param cashonDelivery Indicates if cash on delivery is enabled. True to include orders with
+   *        cash on delivery, false to exclude them.
+   * @param description Description of orders. Null to ignore filtering by description.
+   * @param observation Observations related to orders. Null to ignore filtering by observation.
+   * @param responsible Responsible person associated with orders. Null to ignore filtering by
+   *        responsible person.
+   * @param optimalRoutes Optimal routes for orders. Null to ignore filtering by optimal routes.
+   * @return List of orders matching all specified criteria.
+   */
+  public List<Order> filterOrders(LocalDate dateIssue, LocalDate deadline, String sourceAddress,
+      String destinationAddress, Status status, String addresseeName, String remitterName,
+      int shippingValue, boolean cashonDelivery, String description, String observation,
+      Responsible responsible, List<Path> optimalRoutes) {
+    return repository.findAll().stream()
+        .filter(order -> (dateIssue == null || order.getDateIssue().equals(dateIssue))
+            && (deadline == null || order.getDeadline().equals(deadline))
+            && (sourceAddress == null || order.getSourceAddress().equalsIgnoreCase(sourceAddress))
+            && (destinationAddress == null
+                || order.getDestinationAddress().equalsIgnoreCase(destinationAddress))
+            && (status == null || order.getStatus() == status)
+            && (addresseeName == null || order.getAddresseeName().equalsIgnoreCase(addresseeName))
+            && (remitterName == null || order.getRemitterName().equalsIgnoreCase(remitterName))
+            && (shippingValue <= 0 || order.getShippingValue() == shippingValue)
+            && (!cashonDelivery || order.isCashonDelivery())
+            && (description == null || order.getDescription().contains(description))
+            && (observation == null || order.getObservation().contains(observation))
+            && (responsible == null || order.getResponsible().equals(responsible))
+            && (optimalRoutes == null || order.getOptimalRoutes().equals(optimalRoutes)))
+        .collect(Collectors.toList());
+  }
 
 }

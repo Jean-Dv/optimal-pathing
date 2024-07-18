@@ -122,7 +122,6 @@ public class AlgorithmStarControllerTest {
 
     AlgorithmStar algorithmStar = new AlgorithmStar(digraph.getAdjacencyList(), digraph.getNodes());
 
-    System.out.println(algorithmStar.getNodes().size());
     List<Path> paths =
         algorithmStar.findShortestPaths(digraph.getNodes().get(0), digraph.getNodes().get(4), 2);
 
@@ -143,7 +142,6 @@ public class AlgorithmStarControllerTest {
   public void testStarSearchMongo() {
     AlgorithmStar algorithmStar = new AlgorithmStar();
 
-    System.out.println(algorithmStar.getNodes().size());
     List<Path> paths = algorithmStar.findShortestPaths(algorithmStar.getNodes().get(1),
         algorithmStar.getNodes().get(2), 2);
 

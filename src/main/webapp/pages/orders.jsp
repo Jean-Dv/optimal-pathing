@@ -18,47 +18,79 @@
   <%@ include file="../components/sidemenu.jsp" %>
 
   <main class="ml-60 max-h-screen overflow-auto p-8 mt-20 sm:ml-16">
-    <div class="flex justify-end mb-2">
-      <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1 justify-between">
-        <button
-          type="button"
-          class="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
-        >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 8C6 7.44772 6.44772 7 7 7H17C17.5523 7 18 7.44772 18 8C18 8.55228 17.5523 9 17 9H7C6.44772 9 6 8.55228 6 8Z" fill="currentColor" /><path d="M8 12C8 11.4477 8.44772 11 9 11H15C15.5523 11 16 11.4477 16 12C16 12.5523 15.5523 13 15 13H9C8.44772 13 8 12.5523 8 12Z" fill="currentColor" /><path d="M11 15C10.4477 15 10 15.4477 10 16C10 16.5523 10.4477 17 11 17H13C13.5523 17 14 16.5523 14 16C14 15.4477 13.5523 15 13 15H11Z" fill="currentColor" /></svg>
+              <form id="filterForm" method="get" action="/project-programation/orders">
+                      <div class="flex justify-between items-start gap-8">
+                  <div class="flex gap-8">
+                    <div class="relative">
+                      <details class="group [&_summary::-webkit-details-marker]:hidden">
+                        <summary class="flex cursor-pointer items-center gap-2 border-b border-gray-400 pb-1 text-gray-900 transition hover:border-gray-600">
+                          <span class="text-sm font-medium"> Estado </span>
+                          <span class="transition group-open:-rotate-180">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                          </span>
+                        </summary>
+                        <div class="z-50 group-open:absolute group-open:start-0 group-open:top-auto ">
+                          <div class="w-96 rounded border border-gray-200 bg-white">
+                          <header class="flex items-center justify-between p-4">
+                                <span class="text-sm text-gray-700">Filtro Por Estado</span>
+                                <button type="button" class="text-sm text-gray-900 underline underline-offset-4" onclick="redirectToOrders()">Restablecer</button>
+                            </header>
+                            <ul class="space-y-1 border-t border-gray-200 p-4">
+                              <li>
+                                <label for="FilterPreOrder" class="inline-flex items-center gap-2">
+                                  <input href="" type="checkbox" id="FilterInStock" class="size-5 rounded border-gray-300" name="status" value="Warehouse exit" onchange="filterOrders()"/>
+                                  <span class="text-sm font-medium text-gray-700"> Salida del almacén </span>
+                                </label>
+                              </li>
+                              <li>
+                                <label for="FilterPreOrder" class="inline-flex items-center gap-2">
+                                  <input type="checkbox" id="FilterPreOrder" class="size-5 rounded border-gray-300" name="status" value="On way" onchange="filterOrders()" />
+                                  <span class="text-sm font-medium text-gray-700"> En camino  </span>
+                                </label>
+                              </li>
+                              <li>
+                                <label for="FilterPreOrder" class="inline-flex items-center gap-2">
+                                  <input type="checkbox" id="FilterPreOrder" class="size-5 rounded border-gray-300" name="status" value="DEVOLUTION" onchange="filterOrders()" />
+                                  <span class="text-sm font-medium text-gray-700"> Devolución  </span>
+                                </label>
+                              </li>
+                              <li>
+                                <label for="FilterOutOfStock" class="inline-flex items-center gap-2">
+                                  <input type="checkbox" id="FilterOutOfStock" class="size-5 rounded border-gray-300" name="status" value="DELIVERED" onchange="filterOrders()"/>
+                                  <span class="text-sm font-medium text-gray-700"> Entregado  </span>
+                                </label>
+                              </li>
+                              <li>
+                                <label for="FilterPreOrder" class="inline-flex items-center gap-2">
+                                  <input type="checkbox" id="FilterPreOrder" class="size-5 rounded border-gray-300" name="status" value="DELAY" onchange="filterOrders()" />
+                                  <span class="text-sm font-medium text-gray-700"> Demorado  </span>
+                                </label>
+                              </li>
+                            </ul>   
+                          </div>
+                        </div>
+                      </details>
+                    </div>
+                  </div>
+            </form>
 
-          Ordenar
-        </button>
-        <button
-        type="button"
-        class="inline-flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative"
-        onclick="window.location.href='/project-programation/order'"
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z"
-            fill="currentColor"
-          />
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z"
-            fill="currentColor"
-          />
-        </svg>
+            <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1 mb-4">
+              <button type="button" class="inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 8C6 7.44772 6.44772 7 7 7H17C17.5523 7 18 7.44772 18 8C18 8.55228 17.5523 9 17 9H7C6.44772 9 6 8.55228 6 8Z" fill="currentColor" /><path d="M8 12C8 11.4477 8.44772 11 9 11H15C15.5523 11 16 11.4477 16 12C16 12.5523 15.5523 13 15 13H9C8.44772 13 8 12.5523 8 12Z" fill="currentColor" /><path d="M11 15C10.4477 15 10 15.4477 10 16C10 16.5523 10.4477 17 11 17H13C13.5523 17 14 16.5523 14 16C14 15.4477 13.5523 15 13 15H11Z" fill="currentColor" /></svg>
+                Ordenar
+              </button>
+              <button type="button" class="inline-flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" onclick="window.location.href='/project-programation/order'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z" fill="currentColor" />
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor" />
+                </svg>
+                Añadir
+              </button>
+            </div>
+          </div>
 
-        Añadir
-      </button>
-
-      </div>
-    </div>
     <div class="overflow-x-auto rounded-lg border border-gray-200">
       <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
         <thead class="text-left">
@@ -72,7 +104,7 @@
             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Acciones</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-200">
+        <tbody id="ordersBody" class="divide-y divide-gray-200">
           <% List<Order> orders = (List<Order>) request.getSession().getAttribute("orders"); %>
           <% for (Order order : orders) { %>
             <tr id="<%= order.getId() %>">
@@ -193,6 +225,47 @@
       </div>
   </div>
 
+
+<% int currentPage =(Integer) request.getSession().getAttribute("currentPage");
+      int totalPages =(Integer) request.getSession().getAttribute("totalPages");     
+  %>
+  
+        <ol class="flex justify-center gap-1 text-xs font-medium ml-56">
+            <li>
+                <a href="?page=<%= currentPage > 1 ? currentPage - 1 : 1 %>&status=<%= request.getParameter("status") %>"
+                   class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180">
+                    <span class="sr-only">Prev Page</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            </li>
+
+            <% for (int i = 1; i <= totalPages; i++) { %>
+                <li>
+                    <a href="?page=<%= i %>&status=<%= request.getParameter("status") %>"
+                       class="block size-8 rounded border text-center leading-8
+                              <%= currentPage == i ? "bg-blue-500 text-white border-blue-500" : "bg-white text-gray-900 border-blue-100" %>">
+                        <%= i %>
+                    </a>
+                </li>
+            <% } %>
+
+            <li>
+                <a href="?page=<%= currentPage < totalPages ? currentPage + 1 : totalPages %>&status=<%= request.getParameter("status") %>"
+                   class="inline-flex size-8 items-center justify-center rounded border border-gray-100 bg-white text-gray-900 rtl:rotate-180">
+                    <span class="sr-only">Next Page</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            </li>
+        </ol>
+
 </body>
 
 <script>
@@ -227,7 +300,7 @@
       });
       Toast.fire({
         icon: "success",
-        title: "Deleted successfully"
+        title: "Eliminado correctamente"
       });
       hideWarning();
     })
@@ -251,4 +324,14 @@
       hideWarning();
     });
   }
+
+
+ function filterOrders() {
+           document.getElementById("filterForm").submit();
+ }
+
+ function redirectToOrders() {
+        window.location.href = "/project-programation/orders";  
+    }
 </script>
+

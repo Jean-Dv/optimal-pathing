@@ -203,4 +203,48 @@ public class OrderController {
         .collect(Collectors.toList());
   }
 
+  /**
+   * Retrieves a paginated list of orders.
+   *
+   * @param page the page number to retrieve, starting from 1.
+   * @param pageSize the number of orders per page.
+   * @return a list of orders for the specified page. If the page number exceeds the total number of
+   *         pages, an empty list is returned.
+   */
+  public List<Order> getOrders(int page, int pageSize) {
+    List<Order> orders = getAll();
+
+    int totalOrders = orders.size();
+    int offset = (page - 1) * pageSize;
+
+    if (offset >= totalOrders) {
+      return List.of();
+    }
+    int end = Math.min(offset + pageSize, totalOrders);
+    return getAll().subList(offset, end);
+
+  }
+
+  /**
+   * Retrieves a paginated list of filtered orders.
+   *
+   * @param orders the list of orders to filter and paginate.
+   * @param page the page number to retrieve, starting from 1.
+   * @param pageSize the number of orders per page.
+   * @return a list of orders for the specified page from the filtered list. If the page number
+   *         exceeds the total number of pages in the filtered list, an empty list is returned.
+   */
+  public List<Order> getOrdersFilter(List<Order> orders, int page, int pageSize) {
+    List<Order> ordersFilter = orders;
+
+    int totalOrders = ordersFilter.size();
+    int offset = (page - 1) * pageSize;
+
+    if (offset >= totalOrders) {
+      return List.of();
+    }
+    int end = Math.min(offset + pageSize, totalOrders);
+    return orders.subList(offset, end);
+
+  }
 }

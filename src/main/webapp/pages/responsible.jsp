@@ -206,7 +206,7 @@
       });
       Toast.fire({
         icon: "success",
-        title: "Deleted successfully"
+        title: "Eliminado correctamente"
       });
       hideWarning();
     })

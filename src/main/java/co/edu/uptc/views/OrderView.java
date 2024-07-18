@@ -91,6 +91,13 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       return;
     }
 
+    int parceInt = Integer.parseInt(price);
+    if (parceInt <= 0) {
+      req.setAttribute("errorMessage", "Error: el precio debe ser un valor positivo.");
+      ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+      return;
+    }
+
     if (cashonDelivery != null && cashonDelivery.equals("on")) {
       isCashOn = true;
     } else {
@@ -125,9 +132,10 @@ public class OrderView extends HttpServlet implements SupportsPatch {
     ResponsibleController responsibleController = new ResponsibleController(responsibleRepository);
 
     Responsible responsible = responsibleController.getById(responsibleId);
+
     Order order = new Order(LocalDate.now(), LocalDate.now(), sourceAddress, destinationAddress,
-        Status.WAREHOUSE_EXIT, addresseeName, remitterName, Integer.parseInt(price), isCashOn,
-        descriptionAddress, "", responsible);
+        Status.WAREHOUSE_EXIT, addresseeName, remitterName, parceInt, isCashOn, descriptionAddress,
+        "", responsible);
 
     orderController.add(order);
     if (!sourceAddress.isEmpty() || sourceAddress != null) {

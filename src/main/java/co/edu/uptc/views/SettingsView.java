@@ -46,13 +46,19 @@ public class SettingsView extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     try {
-      String sourceAddress = req.getParameter("sourceAddress");
-      if (sourceAddress == null || sourceAddress.isEmpty()) {
+
+      String streetType = req.getParameter("streetType");
+      String streetName = req.getParameter("streetName");
+      String number = req.getParameter("number");
+      String suffix = req.getParameter("suffix");
+
+      if (streetName == null || streetType == null || number == null || suffix == null
+          || streetType.isEmpty() || number.isEmpty() || suffix.isEmpty() || streetName.isEmpty()) {
         req.setAttribute("source_address_is_required", "La dirección de origen es requerida");
         ServletUtils.forward(req, resp, "/pages/settings.jsp");
         return;
       }
-
+      String sourceAddress = streetType + " " + streetName + " " + number + "-" + suffix;
       MongoClient mongoClient =
           MongoClientFactory.createClient("settingsView", "mongodb://localhost:27017");
       SettingsRepository settingsRepository = new MongoSettingsRepository(mongoClient);

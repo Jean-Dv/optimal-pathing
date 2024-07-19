@@ -119,15 +119,10 @@ public class AlgorithmStarControllerTest {
   @Test
   public void testStarSearch() {
     Digraph digraph = new Digraph(nodes, edges);
-
     AlgorithmStar algorithmStar = new AlgorithmStar(digraph.getAdjacencyList(), digraph.getNodes());
-
-    System.out.println(algorithmStar.getNodes().size());
     List<Path> paths =
         algorithmStar.findShortestPaths(digraph.getNodes().get(0), digraph.getNodes().get(4), 2);
-
-
-
+    
     assertEquals(2, paths.get(0).getEdges().size());
     assertEquals(2, paths.size());
     String message = "[Start: 1.0, Finish: 5.0, Cost: 10.112359550561798, "
@@ -135,15 +130,12 @@ public class AlgorithmStarControllerTest {
         + ", Start: 1.0, Finish: 5.0, Cost: 33.1, Estimated Cost:"
         + " 33.1, Path: 1.0 -> 2.0 2.0 -> 3.0 3.0 -> 5.0 ]";
     assertEquals(message, paths.toString());
-
-
+    
   }
 
   @Test
   public void testStarSearchMongo() {
     AlgorithmStar algorithmStar = new AlgorithmStar();
-
-    System.out.println(algorithmStar.getNodes().size());
     List<Path> paths = algorithmStar.findShortestPaths(algorithmStar.getNodes().get(1),
         algorithmStar.getNodes().get(2), 2);
 

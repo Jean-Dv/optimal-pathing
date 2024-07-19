@@ -85,7 +85,7 @@
               <div id="addressModal"
                 class="${not empty errorMessageAddress ? '' : 'hidden'} fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
                 <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl">
-                  <h2 class="text-2xl text-black mb-4">Dirección de Destino</h2>
+                  <h2 class="text-2xl text-black mb-4">Dirección de origen</h2>
                   <form id="addressForm" class="space-y-4">
                     <div class="flex space-x-4">
                       <div class="w-1/3">
@@ -130,6 +130,13 @@
                         Cerrar
                       </button>
                     </div>
+                    <c:if test="${not empty errorMessageAddress}">
+                      <div class="lg:col-span-2 lg:py-12 lg:text-center lg:pl-8 flex items-center justify-center"
+                        style="color: red;"
+                        onclick="openModal()">
+                        ${errorMessageAddress}
+                      </div>
+                    </c:if>
                   </form>
                 </div>
               </div>

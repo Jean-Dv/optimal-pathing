@@ -310,7 +310,7 @@
 
         if (streetType) fullAddress += streetType + ' ';
         if (streetName) fullAddress += streetName + ' ';
-        if (number) fullAddress += '#' + number;
+        if (number) fullAddress += ' ' + number;
         if (suffix) fullAddress += '-' + suffix;
 
         document.getElementById('destinationAddress').value =fullAddress.trim();

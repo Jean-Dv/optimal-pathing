@@ -15,6 +15,7 @@ import co.edu.uptc.model.ResponsibleRepository;
 import co.edu.uptc.model.SettingsRepository;
 import co.edu.uptc.model.Status;
 import co.edu.uptc.model.SupportsPatch;
+import co.edu.uptc.utils.PropertiesUtils;
 import co.edu.uptc.utils.ServletUtils;
 import co.edu.uptc.utils.StringUtils;
 import com.google.maps.GeoApiContext;
@@ -27,6 +28,7 @@ import com.mongodb.client.model.geojson.Position;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -89,6 +91,19 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       return;
     }
 
+    if (streetName == null || streetType == null || number == null || suffix == null
+        || streetType.isEmpty() || number.isEmpty() || suffix.isEmpty() || streetName.isEmpty()) {
+      req.setAttribute("errorMessageAddress", "Error: todos los campos son obligatorios");
+      ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+      return;
+    }
+
+    if (Integer.parseInt(number) <= 0 || Integer.parseInt(suffix) <= 0) {
+      req.setAttribute("errorMessageAddress", "Error: La dirección no es válida");
+      ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+      return;
+    }
+    boolean isCashOn = false;
     int parceInt = Integer.parseInt(price);
     if (parceInt <= 0) {
       req.setAttribute("errorMessage", "Error: el precio debe ser un valor positivo.");
@@ -96,13 +111,6 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       return;
     }
 
-    if (streetName == null || streetType == null || number == null || suffix == null
-        || streetType.isEmpty() || number.isEmpty() || suffix.isEmpty() || streetName.isEmpty()) {
-      req.setAttribute("errorMessageAddress", "Error: todos los campos son obligatorios");
-      ServletUtils.forward(req, resp, "/pages/addorder.jsp");
-      return;
-    }
-    boolean isCashOn = false;
     if (cashonDelivery != null && cashonDelivery.equals("on")) {
       isCashOn = true;
     } else {
@@ -115,7 +123,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       ServletUtils.forward(req, resp, "/pages/addorder.jsp");
       return;
     }
-    String destinationAddress = streetType + " " + streetName + " " + number + "-" + suffix;
+    String destinationAddress = req.getParameter("destinationAddress");
     MongoClient mongoClient =
         MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
     OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
@@ -150,7 +158,11 @@ public class OrderView extends HttpServlet implements SupportsPatch {
         orderController.editPathOrder(start, finish, order);
 
       } catch (ApiException | InterruptedException | IOException e) {
-        req.setAttribute("errorMessageGoogleMaps", "Dirrección no valida");
+        req.setAttribute("errorMessageGoogleMaps", "Dirrección no es válida");
+        ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+        return;
+      } catch (Exception e) {
+        req.setAttribute("errorMessageGoogleMaps", "Dirrección no es válida");
         ServletUtils.forward(req, resp, "/pages/addorder.jsp");
         return;
       }
@@ -207,6 +219,10 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       throws ServletException, IOException {
 
     final String isCashon = req.getParameter("cashonDelivery");
+    String streetType = req.getParameter("streetType");
+    String streetName = req.getParameter("streetName");
+    String number = req.getParameter("number");
+    String suffix = req.getParameter("suffix");
     String id = req.getParameter("id");
     String destinationAddress = req.getParameter("destinationAddress");
     String descriptionAddress = req.getParameter("descriptionAddress");
@@ -225,6 +241,18 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       req.setAttribute("id", id);
       req.setAttribute("action", "edit");
       req.setAttribute("all_fields_required", "Error: todos los campos son obligatorios");
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
+    }
+    if (streetName == null || streetType == null || number == null || suffix == null
+        || streetType.isEmpty() || number.isEmpty() || suffix.isEmpty() || streetName.isEmpty()) {
+      req.setAttribute("errorMessageAddress", "Error: todos los campos son obligatorios");
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
+    }
+
+    if (Integer.parseInt(number) <= 0 || Integer.parseInt(suffix) <= 0) {
+      req.setAttribute("errorMessageAddress", "Error: La dirección no es válida");
       ServletUtils.forward(req, resp, "/pages/editorder.jsp");
       return;
     }
@@ -309,9 +337,11 @@ public class OrderView extends HttpServlet implements SupportsPatch {
   }
 
   private Point geocoding(String address) throws ApiException, InterruptedException, IOException {
-    GeoApiContext context = new GeoApiContext.Builder().apiKey("").build();
+    Properties properties = PropertiesUtils.loadProperties("local.properties");
+    String apiKey = properties.getProperty("googlemaps.api.key");
+    GeoApiContext context = new GeoApiContext.Builder().apiKey(apiKey).build();
     GeocodingResult[] response =
-        GeocodingApi.geocode(context, address + ",Sogamoso,Boyaca,Colombia").await();
+        GeocodingApi.geocode(context, address + ",Sogamoso,Boyacá,Colombia").await();
     if (response != null && response.length > 0) {
       double lng = response[0].geometry.location.lng;
       double lat = response[0].geometry.location.lat;

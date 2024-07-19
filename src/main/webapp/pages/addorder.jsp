@@ -192,6 +192,12 @@
                 ${errorMessage}
               </div>
             </c:if>
+            <c:if test="${not empty errorMessageGoogleMaps}">
+              <div class="lg:col-span-2 lg:py-12 lg:text-center lg:pl-8 flex items-center justify-center"
+                style="color: red;">
+                ${errorMessageGoogleMaps}
+              </div>
+            </c:if>
              <div id="addressModal" class="${not empty errorMessageAddress ? '' : 'hidden'} fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
                 <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl">
                   <h2 class="text-2xl text-black mb-4">Dirección de Destino</h2>
@@ -211,7 +217,7 @@
                           <option value="Dg">Diagonal</option>
                           <option value="Mz">Manzana</option>
                           <option value="Tv">Transversal</option>
-                          <option value="Vía">Vía</option>
+                          <option value="Via">Vía</option>
                         </select>
                       </div>
                       <div class="w-1/3">
@@ -287,7 +293,7 @@
 
         if (streetType) fullAddress += streetType + ' ';
         if (streetName) fullAddress += streetName + ' ';
-        if (number) fullAddress += '#' + number;
+        if (number) fullAddress += ' ' + number;
         if (suffix) fullAddress += '-' + suffix;
 
         document.getElementById('destinationAddress').value =fullAddress.trim();

@@ -90,7 +90,7 @@ public class OrderController {
    * @param pointInMap - The point in the map to locate the corresponding node.
    * @return The node corresponding to the given point in the map.
    */
-  public Node findNode(Point pointInMap) {
+  public Node findNode(Point pointInMap) throws Exception {
     Document document = this.repository.findByPoint(pointInMap);
     return Node.fromDocument(document);
   }

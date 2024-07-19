@@ -8,6 +8,8 @@ import static org.junit.Assert.fail;
 
 import co.edu.uptc.controller.orders.OrderController;
 import co.edu.uptc.infrastructure.orders.InMemoryOrderRepository;
+import co.edu.uptc.model.Edge;
+import co.edu.uptc.model.Node;
 import co.edu.uptc.model.Order;
 import co.edu.uptc.model.Path;
 import co.edu.uptc.model.Responsible;
@@ -120,4 +122,47 @@ public class OrderControllerTest {
     assertFalse(controller.editStatus("wert-erfghj-422", Status.DELAY));
 
   }
+
+  @Test
+  public void testFilterOrder() {
+
+    Path path = new Path(new Node(null, null, null), new Node(null, null, null),
+        new ArrayList<Edge>(), 154, 54);
+    ArrayList<Path> pathList = new ArrayList<>();
+    pathList.add(path);
+    Order order = new Order(UUID.randomUUID(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
+        "Diagonal 2 # 1 - 45", "Calle 6 # 15 - 8", Status.DELIVERED, "Alejandra Doe", "Company X",
+        3000, false, "", "", new Responsible("Chic Elletson",
+            "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"),
+        new ArrayList<Path>());
+
+    Order order2 = new Order(UUID.randomUUID(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
+        "Diagonal 2 # 1 - 45", "Calle 6 # 15 - 8", Status.WAREHOUSE_EXIT, "Jonh Doe", "Company X",
+        3000, false, "", "", new Responsible("Chic Elletson",
+            "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"),
+        new ArrayList<Path>());
+
+    Order order3 = new Order(UUID.randomUUID(), LocalDate.now(), LocalDate.ofYearDay(2024, 2),
+        "Diagonal 2 # 1 - 45", "Calle 5 # 15 - 8", Status.ON_WAY, "Juan Doe", "Company X", 3000,
+        false, "delicate", "", new Responsible("Chic Elletson",
+            "24dcd50d-a38c-42c7-888c-1c783d988fea", "(210) 5769359", "bmartt0@netscape.com"),
+        pathList);
+
+    controller.add(order);
+    controller.add(order2);
+    controller.add(order3);
+
+    assertEquals(order2, controller.filterOrders(null, null, null, null, Status.WAREHOUSE_EXIT,
+        null, null, 0, false, null, null, null, null).get(0));
+
+    assertEquals(order, controller.filterOrders(null, null, null, "Calle 6 # 15 - 8", null, null,
+        null, 0, false, null, null, null, null).get(0));
+
+    assertEquals(order3, controller.filterOrders(null, null, null, null, null, null, null, 0, false,
+        "delicate", null, null, null).get(0));
+
+    assertEquals(order3, controller.filterOrders(null, null, null, null, null, null, null, 0, false,
+        null, null, null, pathList).get(0));
+  }
 }
+

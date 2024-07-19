@@ -37,7 +37,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 /**
  * Class that represents the view for the order.
  */
@@ -72,18 +71,19 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       return;
     }
 
-    String cashonDelivery = req.getParameter("isCashOn"); // on para si, y null para no
-    String destinationAddress = req.getParameter("destinationAddress");
-    String descriptionAddress = req.getParameter("descriptionAddress");
-    String remitterName = req.getParameter("remitterName");
-    String addresseeName = req.getParameter("addresseeName");
-    String price = req.getParameter("price");
-    String responsibleId = req.getParameter("responsible");
-    boolean isCashOn = false;
+    final String cashonDelivery = req.getParameter("isCashOn"); // on para si, y null para no
+    final String descriptionAddress = req.getParameter("descriptionAddress");
+    final String remitterName = req.getParameter("remitterName");
+    final String addresseeName = req.getParameter("addresseeName");
+    final String price = req.getParameter("price");
+    final String responsibleId = req.getParameter("responsible");
+    String streetType = req.getParameter("streetType");
+    String streetName = req.getParameter("streetName");
+    String number = req.getParameter("number");
+    String suffix = req.getParameter("suffix");
 
-    if (descriptionAddress == null || destinationAddress == null || remitterName == null
-        || addresseeName == null || price == null || responsibleId == null
-        || descriptionAddress.isEmpty() || destinationAddress.isEmpty() || price.isEmpty()
+    if (descriptionAddress == null || remitterName == null || addresseeName == null || price == null
+        || responsibleId == null || descriptionAddress.isEmpty() || price.isEmpty()
         || responsibleId.isEmpty() || remitterName.isEmpty() || addresseeName.isEmpty()) {
 
       req.setAttribute("errorMessage", "Error: todos los campos son obligatorios");
@@ -91,6 +91,19 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       return;
     }
 
+    if (streetName == null || streetType == null || number == null || suffix == null
+        || streetType.isEmpty() || number.isEmpty() || suffix.isEmpty() || streetName.isEmpty()) {
+      req.setAttribute("errorMessageAddress", "Error: todos los campos son obligatorios");
+      ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+      return;
+    }
+
+    if (Integer.parseInt(number) <= 0 || Integer.parseInt(suffix) <= 0) {
+      req.setAttribute("errorMessageAddress", "Error: La dirección no es válida");
+      ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+      return;
+    }
+    boolean isCashOn = false;
     int parceInt = Integer.parseInt(price);
     if (parceInt <= 0) {
       req.setAttribute("errorMessage", "Error: el precio debe ser un valor positivo.");
@@ -110,7 +123,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       ServletUtils.forward(req, resp, "/pages/addorder.jsp");
       return;
     }
-
+    String destinationAddress = req.getParameter("destinationAddress");
     MongoClient mongoClient =
         MongoClientFactory.createClient("orderView", "mongodb://localhost:27017");
     OrderRepository orderRepository = new MongoOrderRepository(mongoClient);
@@ -145,10 +158,16 @@ public class OrderView extends HttpServlet implements SupportsPatch {
         orderController.editPathOrder(start, finish, order);
 
       } catch (ApiException | InterruptedException | IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        req.setAttribute("errorMessageGoogleMaps", "Dirrección no es válida");
+        ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+        return;
+      } catch (Exception e) {
+        req.setAttribute("errorMessageGoogleMaps", "Dirrección no es válida");
+        ServletUtils.forward(req, resp, "/pages/addorder.jsp");
+        return;
       }
     }
+
     resp.sendRedirect("/project-programation/orders");
     return;
 
@@ -157,7 +176,6 @@ public class OrderView extends HttpServlet implements SupportsPatch {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-
 
     String id = req.getParameter("id");
     String action = req.getParameter("action");
@@ -201,6 +219,10 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       throws ServletException, IOException {
 
     final String isCashon = req.getParameter("cashonDelivery");
+    String streetType = req.getParameter("streetType");
+    String streetName = req.getParameter("streetName");
+    String number = req.getParameter("number");
+    String suffix = req.getParameter("suffix");
     String id = req.getParameter("id");
     String destinationAddress = req.getParameter("destinationAddress");
     String descriptionAddress = req.getParameter("descriptionAddress");
@@ -219,6 +241,18 @@ public class OrderView extends HttpServlet implements SupportsPatch {
       req.setAttribute("id", id);
       req.setAttribute("action", "edit");
       req.setAttribute("all_fields_required", "Error: todos los campos son obligatorios");
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
+    }
+    if (streetName == null || streetType == null || number == null || suffix == null
+        || streetType.isEmpty() || number.isEmpty() || suffix.isEmpty() || streetName.isEmpty()) {
+      req.setAttribute("errorMessageAddress", "Error: todos los campos son obligatorios");
+      ServletUtils.forward(req, resp, "/pages/editorder.jsp");
+      return;
+    }
+
+    if (Integer.parseInt(number) <= 0 || Integer.parseInt(suffix) <= 0) {
+      req.setAttribute("errorMessageAddress", "Error: La dirección no es válida");
       ServletUtils.forward(req, resp, "/pages/editorder.jsp");
       return;
     }

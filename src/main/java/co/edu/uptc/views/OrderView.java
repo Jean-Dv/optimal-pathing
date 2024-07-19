@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
 /**
  * Class that represents the view for the order.
  */
@@ -161,13 +162,8 @@ public class OrderView extends HttpServlet implements SupportsPatch {
         req.setAttribute("errorMessageGoogleMaps", "Dirrección no es válida");
         ServletUtils.forward(req, resp, "/pages/addorder.jsp");
         return;
-      } catch (Exception e) {
-        req.setAttribute("errorMessageGoogleMaps", "Dirrección no es válida");
-        ServletUtils.forward(req, resp, "/pages/addorder.jsp");
-        return;
       }
     }
-
     resp.sendRedirect("/project-programation/orders");
     return;
 
@@ -176,6 +172,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
+
 
     String id = req.getParameter("id");
     String action = req.getParameter("action");

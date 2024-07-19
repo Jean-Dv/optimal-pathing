@@ -157,8 +157,7 @@ public class OrderController {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     return gson.toJson(route);
   }
-
-
+  
   /**
    * Filters orders based on specified criteria.
    *

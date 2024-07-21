@@ -158,7 +158,7 @@ public class OrderView extends HttpServlet implements SupportsPatch {
         Node finish = orderController.findNode(geocoding(destinationAddress));
         orderController.editPathOrder(start, finish, order);
 
-      } catch (ApiException | InterruptedException | IOException e) {
+      } catch (Exception e) {
         req.setAttribute("errorMessageGoogleMaps", "Dirrección no es válida");
         ServletUtils.forward(req, resp, "/pages/addorder.jsp");
         return;

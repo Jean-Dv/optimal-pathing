@@ -1,6 +1,14 @@
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="co.edu.uptc.model.Order" %>
+<%@ page import="java.util.HashMap" %>
+<% HashMap<String, String> statusMap = new HashMap<String, String>();
+   statusMap.put("WAREHOUSE_EXIT", "Salida del almacén");
+   statusMap.put("ON_WAY", "En camino");
+   statusMap.put("DEVOLUTION", "Devolución");
+   statusMap.put("DELIVERED", "Entregado");
+   statusMap.put("DELAY", "Demorado");
+%>
 <html lang="en">
 <head>
     <title>Inicio</title>
@@ -106,11 +114,16 @@
         </thead>
         <tbody id="ordersBody" class="divide-y divide-gray-200">
           <% List<Order> orders = (List<Order>) request.getSession().getAttribute("orders"); %>
+          <% if (orders.isEmpty()) { %>
+            <tr>
+              <td colspan="7" class="whitespace-nowrap px-4 py-2 text-gray-700 text-center">No hay ordenes</td>
+            </tr>
+          <% } %>
           <% for (Order order : orders) { %>
             <tr id="<%= order.getId() %>">
               <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900"><%= order.getId() %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getRemitterName() %></td>
-              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getStatus().getStatus() %></td>
+              <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= statusMap.get(order.getStatus().toString()) %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getDestinationAddress() %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.getAddresseeName() %></td>
               <td class="whitespace-nowrap px-4 py-2 text-gray-700"><%= order.isCashonDelivery() ? "✔️" : "❌" %></td>

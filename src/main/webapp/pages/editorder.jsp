@@ -216,6 +216,12 @@
                   </div>
                 </c:if>
             </div>
+            <c:if test="${not empty errorMessageGoogleMaps}">
+              <div class="lg:col-span-2 lg:py-12 lg:text-center lg:pl-8 flex items-center justify-center"
+                style="color: red;">
+                ${errorMessageGoogleMaps}
+              </div>
+            </c:if>
             <div id="addressModal" class="${not empty errorMessageAddress ? '' : 'hidden'} fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
                 <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-4xl">
                   <h2 class="text-2xl text-black mb-4">Dirección de Destino</h2>

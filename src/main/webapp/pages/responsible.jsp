@@ -12,7 +12,7 @@
   <jsp:include page="../components/navbar.jsp">
     <jsp:param name="section" value="Responsable" />
     <jsp:param name="hrefSection" value="responsibles" />
-    <jsp:param name="title" value="Inico" />
+    <jsp:param name="title" value="Inicio" />
     <jsp:param name="hrefTitle" value="responsibles" />
   </jsp:include>
   <%@ include file="../components/sidemenu.jsp" %>
